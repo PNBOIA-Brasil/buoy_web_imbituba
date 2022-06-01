@@ -7,9 +7,13 @@ const initPlotly = () => {
   if (chartElement) { // only build a map if there's a div#map to inject into
 
     const almirantadointData = JSON.parse(chartElement.dataset.almirantadoint);
-    
+
+    const almirantadoextData = JSON.parse(chartElement.dataset.almirantadoext);
+    const tideData = JSON.parse(chartElement.dataset.tide);
+
     const language = chartElement.dataset.language;
 
+    plotTide(almirantadoextData, tideData, language)
     plotWspd(almirantadointData, language);
     plotWdir(almirantadointData, language);
     plotWdirg(almirantadointData, language);
@@ -22,13 +26,100 @@ const initPlotly = () => {
   }
 };
 
+const plotTide = (almirantadoextData, tideData, language) => {
+
+  const almirantadoextTide1 = {
+    x: almirantadoextData.date_time,
+    y: almirantadoextData.elev1,
+    mode: 'lines+markers',
+    name: 'MARÉ MEDIDA 1',
+    line: {
+      color: '#c22d45',
+      width: 2
+    }
+  };
+
+  const almirantadoextTide2 = {
+    x: almirantadoextData.date_time,
+    y: almirantadoextData.elev2,
+    mode: 'lines+markers',
+    name: 'MARÉ MEDIDA 2',
+    line: {
+      color: '#2f42ad',
+      width: 2
+    }
+  };
+
+  const almirantadoextTide = {
+    x: tideData.date_time,
+    y: tideData.elev,
+    mode: 'lines+markers',
+    name: 'MARÉ PREVISTA',
+    line: {
+      color: '#486641',
+      width: 2
+    }
+  };
+
+
+  const data = [almirantadoextTide1, almirantadoextTide2, almirantadoextTide];
+
+  let text = 'MARÉS'
+  let title = 'Elevação do nível do mar (m)'
+  if (language === 'english') {
+    text = "TIDES"
+    title = 'Sea Level (m)'
+  }
+
+
+  var layout = {
+    title: {
+      text: text,
+      font: {
+        family: 'Fira Sans, sans-serif',
+        size: 24
+      },
+    },
+    plot_bgcolor:"rgba(0,0,0,0)",
+    paper_bgcolor:"rgba(0,0,0,0)",
+    xaxis: {
+      // title: 'Tempo',
+      showgrid: true,
+      tickformat: '%d/%m %Hh',
+      zeroline: false,
+      gridcolor: 'rgba(0,0,0,0.2)'
+    },
+    yaxis: {
+      title: title,
+      showgrid: true,
+      showline: true,
+      gridcolor: 'rgba(0,0,0,0.2)'
+    },
+    showlegend: true,
+    legend:{"orientation": "h",
+      x: 0,
+      y: -0.2,
+      traceorder: 'normal',
+      font: {
+        family: 'sans-serif',
+        size: 10,
+        color: '#000'
+      }
+    }
+  };
+  var config = {responsive: true, displayModeBar: false }
+
+  Plotly.newPlot('tide-plot', data, layout, config);
+
+};
+
 const plotWvdir = (almirantadointData, language) => {
 
     const almirantadointWvdir = {
       x: almirantadointData.date_time,
       y: almirantadointData.wvdir,
       mode: 'lines+markers',
-      name: 'ALCATRAZES',
+      name: 'NORONHA',
       line: {
         color: '#c22d45',
         width: 2
@@ -69,7 +160,7 @@ const plotWvdir = (almirantadointData, language) => {
         showline: true,
         gridcolor: 'rgba(0,0,0,0.2)'
       },
-      showlegend: true,
+      showlegend: false,
       legend:{"orientation": "h",
         x: 0,
         y: -0.2,
@@ -95,16 +186,14 @@ const plotWdir = (almirantadointData, language) => {
       x: almirantadointData.date_time,
       y: almirantadointData.wdir,
       mode: 'lines+markers',
-      name: 'ALCATRAZES',
+      name: '',
       line: {
         color: '#c22d45',
         width: 2
       }
     };
 
-    
-
-    
+        
 
     const data = [almirantadointWdir];
 
@@ -139,7 +228,7 @@ const plotWdir = (almirantadointData, language) => {
         showline: true,
         gridcolor: 'rgba(0,0,0,0.2)'
       },
-      showlegend: true,
+      showlegend: false,
       legend:{"orientation": "h",
         x: 0,
         y: -0.2,
@@ -172,7 +261,7 @@ const plotWdirg = (almirantadointData, language) => {
 
     var layout1 = {
       title: {
-        text: 'ALCATRAZES',
+        text: '',
         font: {
           family: 'Fira Sans, sans-serif',
           size: 18
@@ -218,7 +307,7 @@ const plotWvdirg = (almirantadointData, language) => {
 
     var layout1 = {
       title: {
-        text: 'ALCATRAZES',
+        text: '',
         font: {
           family: 'Fira Sans, sans-serif',
           size: 18
@@ -253,7 +342,7 @@ const plotWspd = (almirantadointData, language) => {
       x: almirantadointData.date_time,
       y: almirantadointData.wspd,
       mode: 'lines+markers',
-      name: 'ALCATRAZES',
+      name: '',
       line: {
         color: '#c22d45',
         width: 2
@@ -294,7 +383,7 @@ const plotWspd = (almirantadointData, language) => {
         showline: true,
         gridcolor: 'rgba(0,0,0,0.2)'
       },
-      showlegend: true,
+      showlegend: false,
       legend:{"orientation": "h",
         x: 0,
         y: -0.2,
@@ -319,7 +408,7 @@ const plotSwvht = (almirantadointData, language) => {
       x: almirantadointData.date_time,
       y: almirantadointData.swvht,
       mode: 'lines+markers',
-      name: 'ALCATRAZES',
+      name: '',
       line: {
         color: '#c22d45',
         width: 2
@@ -359,7 +448,7 @@ const plotSwvht = (almirantadointData, language) => {
         showline: true,
         gridcolor: 'rgba(0,0,0,0.2)'
       },
-      showlegend: true,
+      showlegend: false,
       legend:{"orientation": "h",
         x: 0,
         y: -0.2,
@@ -383,7 +472,7 @@ const plotTp = (almirantadointData, language) => {
     x: almirantadointData.date_time,
     y: almirantadointData.tp,
     mode: 'lines+markers',
-    name: 'ALCATRAZES',
+    name: '',
     line: {
       color: '#c22d45',
       width: 2
@@ -424,7 +513,7 @@ const plotTp = (almirantadointData, language) => {
       showline: true,
       gridcolor: 'rgba(0,0,0,0.2)'
     },
-    showlegend: true,
+    showlegend: false,
     legend:{"orientation": "h",
       x: 0,
       y: -0.2,
@@ -449,7 +538,7 @@ const plotSst = (almirantadointData, language) => {
       x: almirantadointData.date_time,
       y: almirantadointData.sst,
       mode: 'lines+markers',
-      name: 'ALCATRAZES',
+      name: '',
       line: {
         color: '#c22d45',
         width: 2
@@ -490,7 +579,7 @@ const plotSst = (almirantadointData, language) => {
         showline: true,
         gridcolor: 'rgba(0,0,0,0.2)'
       },
-      showlegend: true,
+      showlegend: false,
       legend:{"orientation": "h",
         x: 0,
         y: -0.2,

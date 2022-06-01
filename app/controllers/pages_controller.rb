@@ -40,10 +40,28 @@ class PagesController < ApplicationController
 
     @almirantado_int = System.where("name ='almirantado_int' ") [0]    
     @almirantado_int_data = get_remobs(@almirantado_int, start_date, end_date)
-    
+    @almirantado_ext = System.where("name ='almirantado_ext' ") [0]    
+    @almirantado_ext_data = get_tides(@almirantado_ext, start_date, end_date)
+    @tides = get_tide_data(start_date, end_date) 
   end
 
   private
+
+  def get_tide_data(start_date, end_date)
+    tides = Tide.where("date_time >= '#{start_date}' and date_time <= '#{end_date}'").order(date_time: :desc)
+    params = {}
+    params[:date_time] = []
+    params[:elev] = []
+
+    tides.each do |tide|
+      params[:date_time] << tide[:date_time]
+      params[:elev] << tide[:elev]
+    end
+
+    return params
+
+  end
+
 
   def get_drifter(buoy)
     response = RestClient.get("https://api.sofarocean.com/api/latest-data?spotterId=SPOT-1565&token=#{ENV["IN_TOKEN"]}")
@@ -59,11 +77,42 @@ class PagesController < ApplicationController
     return params
   end
 
-  def get_remobs(buoy, start_date, end_date)
+  def get_tides(buoy, start_date, end_date)
     if buoy.buoy_id
       begin
-        response = RestClient.get("http://remobsapi.herokuapp.com/api/v1/data_buoys?buoy=#{buoy.buoy_id.to_i}&start_date=#{start_date.strftime("%Y-%m-%d")}&end_date=#{end_date.strftime("%Y-%m-%d")}&token=#{ENV["REMOBS_TOKEN"]}")
+        response = RestClient.get("http://remobsapi.herokuapp.com/api/v1/data_tides?buoy=#{buoy.buoy_id.to_i}&start_date=#{start_date.strftime("%Y-%m-%d")}&end_date=#{end_date.strftime("%Y-%m-%d")}&token=#{ENV["REMOBS_TOKEN"]}")
 
+        remobs_response = JSON.parse(response)
+
+        params = {}
+        params[:elev1] = []
+        params[:elev2] = []
+        params[:date_time] = []
+        params[:buoy_id] = []
+
+        remobs_response.each do |item|
+          params[:buoy_id] << item['buoy_id']
+
+          params[:elev1] << item['elev1'].to_f
+          params[:elev2] << item['elev2'].to_f
+
+          params[:date_time] << Time.parse(item['date_time'])
+
+        end
+        return params
+      rescue
+        return {}
+      end
+    else
+      return {}
+    end
+  end
+
+  def get_remobs(buoy, start_date, end_date)
+    if buoy.buoy_id
+
+      begin
+        response = RestClient.get("http://remobsapi.herokuapp.com/api/v1/data_buoys?buoy=#{buoy.buoy_id.to_i}&start_date=#{start_date.strftime("%Y-%m-%d")}&end_date=#{end_date.strftime("%Y-%m-%d")}&token=#{ENV["REMOBS_TOKEN"]}")
         remobs_response = JSON.parse(response)
 
         params = {}

@@ -1,6 +1,6 @@
 <%= render 'shared/navbar' %>
 
-<div class="front-page" style="background-image: url('<%= image_path 'abrolhos.jpg' %>')" id="home">
+<div class="front-page" style="background-image: url('<%= image_path 'alcatrazes.jpg' %>')" id="home">
   <div class="container banner">
     <div class="row">
       <div class="col-sm-12 col-md-6 col-lg-6 text-right">         
@@ -30,16 +30,16 @@
 </div>
 <div class="projetos">
 	<div class= "container text-justify" id="projetos">
-		<h2>PROJETOS GLOSS e REMObs </h2>
+		<h2>PROJETOS GLOSS-BRASIL e REMObs </h2>
 		<div class="row align-items-center">
 			<div class="col-sm-12 col-md-6 col-lg-6 mt-2 align-items-center">	
 				<div class= "card-project text-align-center ">
-					<%= image_tag "ant2.jpg"%>
+					<%= image_tag "maregrafo_fiscal.png"%>
 				</div>			
 			</div>
 			<div class="col-sm-12 col-md-6 col-lg-6 mt-2 align-items-center">
-				<h6>Os projetos <strong>GLOSS</strong> e <strong>REMObs</strong> 
-				se uniram para montar um sistema completo 
+				<h6>Os projetos <strong>GLOSS-BRASIL</strong> e <strong>REMObs</strong> 
+				se uniram para elaborar um sistema completo 
 				de monitoramento das condições de ondas, ventos e marés no Arquipélago
 				de Fernando de Noronha. Para isso, montamos uma rede de coleta de dados
 				ambientais por meio do uso de boias ondógrafo de fundeio e estações
@@ -50,16 +50,18 @@
 		<div class="row align-items-center mt-2">
 			<div class="col-sm-12 col-md-6 col-lg-6 mt-2 align-items-center">	
 				<h6>Gerenciado pelo <strong>Centro de Hidrografia da Marinha (CHM)</strong>, o
-				<strong>GLOSS ()</strong> é uma iniciativa promissora da ciência, tecnologia e inovação, que visa a melhorar a compreensão das interações entre o gelo marinho-atmosfera-oceano-ondas e as trocas de calor, momentum 
-				(quantidade de movimento) e CO2 em suas interfaces no Oceano Austral. É um projeto componente do <strong>PROANTAR</strong> e financiado pelo <strong>CNPq/MCTI/CAPES</strong>.</h6>			
-				<h6>O projeto <strong>REMObs (REMO Observacional)</strong>, uma parceria entre o <strong>Centro de Hidrografia da Marinha (CHM) e a 
-				PETROBRAS</strong>, contempla uma união de esforços para o desenvolvimento e consolidação de uma Boia Meteoceanográfica Nacional
+				<strong>GLOSS-BRASIL</strong> tem um papel importante na determinação das
+				variações no nível do mar para auxiliar as ciências ambientais e para
+				melhorar o planejamento social e econômico.</h6>	
+				<h6>O projeto <strong>REMObs (REMO Observacional)</strong>, uma parceria entre o <strong>Centro de Hidrografia da Marinha
+				(CHM)</strong> e a <strong>PETROBRAS</strong>, contempla uma união de esforços para o desenvolvimento e consolidação de uma Boia Meteoceanográfica Nacional
 				(BMO-BR). E para isso, também prevê o estabelecimento de uma rede de coleta de dados operacionais no Atlântico Sul, fator
 				de grande importância para a calibração e validação de modelos de previsão meteoceanográfica.</h6>
+				<h6><strong>Este projeto conta com o apoio dos nossos parceiros do <a href="https://surfguru.com.br/" target="_blank" style="decoration: none">SURFGURU</a></strong>.</h6>.
 			</div>
 			<div class="col-sm-12 col-md-6 col-lg-6 mt-2 align-items-center">
 				<div class= "card-project text-align-center">
-					<%= image_tag "ant1.jpg"%>
+					<%= image_tag "boia_abrolhos.jpg"%>
 				</div>	
 			</div>			
 		</div>
@@ -71,119 +73,99 @@
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12 text-right"> 
 				<div id="map"
-							style="width: 100%; height: 600px;"
-							data-markers="<%= @almirantado_int.to_json %>"
+							style="width: 100%; height: 400px;"
+							data-markers="<%= [@almirantado_int, @almirantado_ext].to_json %>"
 							data-almirantadoint="<%= @almirantado_int_data.to_json %>"
+							data-almirantadoext="<%= @almirantado_ext_data.to_json %>"
 							data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>">
 				</div>
-				<div class="card-product mt-1 box" id='almirantado_int'>
-					<div class="card-product-infos w-100">		
-						<h3 class='text-center'>ALCATRAZES</h3>
-						<% if @almirantado_int_data == {} || @almirantado_int_data[:date_time] == [] %>
-							<p  class='text-center'><strong>BOIA A SER LANÇADA</strong></p>
-						<% else %>
-							<p  class='text-center'><strong>ÚLTIMO DADO:</strong> <%= @almirantado_int_data[:date_time][0].strftime('%Y/%m/%d %H:%M')%></p>
-							<div class="row">
-								<div class="col-6 text-center">
-									<% if @almirantado_int_data[:swvht][0] %>
-										<p><strong>ALT. ONDAS:</strong> <%= @almirantado_int_data[:swvht][0].round(1)%> m</p>
-										<p><strong>PER. ONDAS:</strong> <%= @almirantado_int_data[:tp][0].round(1)%> s</p>
-										<p><strong>DIR. ONDAS:</strong> <%= @almirantado_int_data[:wvdir][0].round()%>°</p>
-									<% elsif @almirantado_int_data[:swvht][1] %>
-										<p><strong>ALT. ONDAS:</strong> <%= @almirantado_int_data[:swvht][1].round(1)%> m</p>
-										<p><strong>PER. ONDAS:</strong> <%= @almirantado_int_data[:tp][1].round(1)%> s</p>
-										<p><strong>DIR. ONDAS:</strong> <%= @almirantado_int_data[:wvdir][1].round()%>°</p>
-									<% elsif @almirantado_int_data[:swvht][2] %>
-										<p><strong>ALT. ONDAS:</strong> <%= @almirantado_int_data[:swvht][2].round(1)%> m</p>
-										<p><strong>PER. ONDAS:</strong> <%= @almirantado_int_data[:tp][2].round(1)%> s</p>
-										<p><strong>DIR. ONDAS:</strong> <%= @almirantado_int_data[:wvdir][2].round()%>°</p>
-									<% else %>
-										<p><strong>ALT. ONDAS:</strong> -- m</p>
-										<p><strong>PER. ONDAS:</strong> -- s</p>
-										<p><strong>DIR. ONDAS:</strong> -- °</p>
-									<% end %>
-								</div>
-								<div class="col-6 text-center"> 								
-									<% if @almirantado_int_data[:sst][0] %>
-										<p><strong>SST:</strong> <%= @almirantado_int_data[:sst][0].round()%> °C</p>
-									<% elsif @almirantado_int_data[:sst][1] %>
-										<p><strong>SST:</strong> <%= @almirantado_int_data[:sst][1].round()%> °C</p>
-									<% elsif @almirantado_int_data[:sst][2] %>
-										<p><strong>SST:</strong> <%= @almirantado_int_data[:sst][2].round()%> °C</p>
-									<% else %>
-										<p><strong>SST:</strong> -- °C</p>
-									<% end %>
-									<% if @almirantado_int_data[:wspd][0] %>
-										<p><strong>VEL. VENTO:</strong> <%= @almirantado_int_data[:wspd][0].round()%> m/s</p>
-										<p><strong>DIR. VENTO:</strong> <%= @almirantado_int_data[:wdir][0].round()%> °</p>
-									<% elsif @almirantado_int_data[:wspd][1] %>
-										<p><strong>VEL. VENTO:</strong> <%= @almirantado_int_data[:wspd][1].round()%> m/s</p>
-										<p><strong>DIR. VENTO:</strong> <%= @almirantado_int_data[:wdir][1].round()%> °</p>
-									<% elsif @almirantado_int_data[:wspd][2] %>
-										<p><strong>VEL. VENTO:</strong> <%= @almirantado_int_data[:wspd][2].round()%> m/s</p>
-										<p><strong>DIR. VENTO:</strong> <%= @almirantado_int_data[:wdir][2].round()%> °</p>
-									<% else %>
-										<p><strong>VEL. VENTO:</strong> -- m/s</p>
-										<p><strong>DIR. VENTO:</strong> -- °</p>
-									<% end %>
-								</div>
+				<div class="row">
+					<div class="col-md-6 col-sm-12 text-right"> 
+						<div class="card-product mt-1 box" id='almirantado_int'>
+							<div class="card-product-infos w-100">		
+								<h3 class='text-center'>BOIA</h3>
+								<% if @almirantado_int_data == {} || @almirantado_int_data[:date_time] == [] %>
+									<p  class='text-center'><strong>A SER INSTALADO</strong></p>
+								<% else %>
+									<p  class='text-center'><strong>ÚLTIMO DADO:</strong> <%= @almirantado_int_data[:date_time][0].strftime('%Y/%m/%d %H:%M')%></p>
+									<div class="row">
+										<div class="col-6 text-center">
+											<% if @almirantado_int_data[:swvht][0] %>
+												<p><strong>ALT. ONDAS:</strong> <%= @almirantado_int_data[:swvht][0].round(1)%> m</p>
+												<p><strong>PER. ONDAS:</strong> <%= @almirantado_int_data[:tp][0].round(1)%> s</p>
+												<p><strong>DIR. ONDAS:</strong> <%= @almirantado_int_data[:wvdir][0].round()%>°</p>
+											<% elsif @almirantado_int_data[:swvht][1] %>
+												<p><strong>ALT. ONDAS:</strong> <%= @almirantado_int_data[:swvht][1].round(1)%> m</p>
+												<p><strong>PER. ONDAS:</strong> <%= @almirantado_int_data[:tp][1].round(1)%> s</p>
+												<p><strong>DIR. ONDAS:</strong> <%= @almirantado_int_data[:wvdir][1].round()%>°</p>
+											<% elsif @almirantado_int_data[:swvht][2] %>
+												<p><strong>ALT. ONDAS:</strong> <%= @almirantado_int_data[:swvht][2].round(1)%> m</p>
+												<p><strong>PER. ONDAS:</strong> <%= @almirantado_int_data[:tp][2].round(1)%> s</p>
+												<p><strong>DIR. ONDAS:</strong> <%= @almirantado_int_data[:wvdir][2].round()%>°</p>
+											<% else %>
+												<p><strong>ALT. ONDAS:</strong> -- m</p>
+												<p><strong>PER. ONDAS:</strong> -- s</p>
+												<p><strong>DIR. ONDAS:</strong> -- °</p>
+											<% end %>
+										</div>
+										<div class="col-6 text-center"> 								
+											<% if @almirantado_int_data[:sst][0] %>
+												<p><strong>SST:</strong> <%= @almirantado_int_data[:sst][0].round()%> °C</p>
+											<% elsif @almirantado_int_data[:sst][1] %>
+												<p><strong>SST:</strong> <%= @almirantado_int_data[:sst][1].round()%> °C</p>
+											<% elsif @almirantado_int_data[:sst][2] %>
+												<p><strong>SST:</strong> <%= @almirantado_int_data[:sst][2].round()%> °C</p>
+											<% else %>
+												<p><strong>SST:</strong> -- °C</p>
+											<% end %>
+											<% if @almirantado_int_data[:wspd][0] %>
+												<p><strong>VEL. VENTO:</strong> <%= @almirantado_int_data[:wspd][0].round()%> m/s</p>
+												<p><strong>DIR. VENTO:</strong> <%= @almirantado_int_data[:wdir][0].round()%> °</p>
+											<% elsif @almirantado_int_data[:wspd][1] %>
+												<p><strong>VEL. VENTO:</strong> <%= @almirantado_int_data[:wspd][1].round()%> m/s</p>
+												<p><strong>DIR. VENTO:</strong> <%= @almirantado_int_data[:wdir][1].round()%> °</p>
+											<% elsif @almirantado_int_data[:wspd][2] %>
+												<p><strong>VEL. VENTO:</strong> <%= @almirantado_int_data[:wspd][2].round()%> m/s</p>
+												<p><strong>DIR. VENTO:</strong> <%= @almirantado_int_data[:wdir][2].round()%> °</p>
+											<% else %>
+												<p><strong>VEL. VENTO:</strong> -- m/s</p>
+												<p><strong>DIR. VENTO:</strong> -- °</p>
+											<% end %>
+										</div>
+									</div>
+								<% end %>												
 							</div>
-						<% end %>												
+						</div>
 					</div>
-				</div>
-				<div class="card-product mt-1 box" id='almirantado_int'>
-					<div class="card-product-infos w-100">		
-						<h3 class='text-center'>ALCATRAZES</h3>
-						<% if @almirantado_int_data == {} || @almirantado_int_data[:date_time] == [] %>
-							<p  class='text-center'><strong>BOIA A SER LANÇADA</strong></p>
-						<% else %>
-							<p  class='text-center'><strong>ÚLTIMO DADO:</strong> <%= @almirantado_int_data[:date_time][0].strftime('%Y/%m/%d %H:%M')%></p>
-							<div class="row">
-								<div class="col-6 text-center">
-									<% if @almirantado_int_data[:swvht][0] %>
-										<p><strong>ALT. ONDAS:</strong> <%= @almirantado_int_data[:swvht][0].round(1)%> m</p>
-										<p><strong>PER. ONDAS:</strong> <%= @almirantado_int_data[:tp][0].round(1)%> s</p>
-										<p><strong>DIR. ONDAS:</strong> <%= @almirantado_int_data[:wvdir][0].round()%>°</p>
-									<% elsif @almirantado_int_data[:swvht][1] %>
-										<p><strong>ALT. ONDAS:</strong> <%= @almirantado_int_data[:swvht][1].round(1)%> m</p>
-										<p><strong>PER. ONDAS:</strong> <%= @almirantado_int_data[:tp][1].round(1)%> s</p>
-										<p><strong>DIR. ONDAS:</strong> <%= @almirantado_int_data[:wvdir][1].round()%>°</p>
-									<% elsif @almirantado_int_data[:swvht][2] %>
-										<p><strong>ALT. ONDAS:</strong> <%= @almirantado_int_data[:swvht][2].round(1)%> m</p>
-										<p><strong>PER. ONDAS:</strong> <%= @almirantado_int_data[:tp][2].round(1)%> s</p>
-										<p><strong>DIR. ONDAS:</strong> <%= @almirantado_int_data[:wvdir][2].round()%>°</p>
-									<% else %>
-										<p><strong>ALT. ONDAS:</strong> -- m</p>
-										<p><strong>PER. ONDAS:</strong> -- s</p>
-										<p><strong>DIR. ONDAS:</strong> -- °</p>
-									<% end %>
-								</div>
-								<div class="col-6 text-center"> 								
-									<% if @almirantado_int_data[:sst][0] %>
-										<p><strong>SST:</strong> <%= @almirantado_int_data[:sst][0].round()%> °C</p>
-									<% elsif @almirantado_int_data[:sst][1] %>
-										<p><strong>SST:</strong> <%= @almirantado_int_data[:sst][1].round()%> °C</p>
-									<% elsif @almirantado_int_data[:sst][2] %>
-										<p><strong>SST:</strong> <%= @almirantado_int_data[:sst][2].round()%> °C</p>
-									<% else %>
-										<p><strong>SST:</strong> -- °C</p>
-									<% end %>
-									<% if @almirantado_int_data[:wspd][0] %>
-										<p><strong>VEL. VENTO:</strong> <%= @almirantado_int_data[:wspd][0].round()%> m/s</p>
-										<p><strong>DIR. VENTO:</strong> <%= @almirantado_int_data[:wdir][0].round()%> °</p>
-									<% elsif @almirantado_int_data[:wspd][1] %>
-										<p><strong>VEL. VENTO:</strong> <%= @almirantado_int_data[:wspd][1].round()%> m/s</p>
-										<p><strong>DIR. VENTO:</strong> <%= @almirantado_int_data[:wdir][1].round()%> °</p>
-									<% elsif @almirantado_int_data[:wspd][2] %>
-										<p><strong>VEL. VENTO:</strong> <%= @almirantado_int_data[:wspd][2].round()%> m/s</p>
-										<p><strong>DIR. VENTO:</strong> <%= @almirantado_int_data[:wdir][2].round()%> °</p>
-									<% else %>
-										<p><strong>VEL. VENTO:</strong> -- m/s</p>
-										<p><strong>DIR. VENTO:</strong> -- °</p>
-									<% end %>
-								</div>
+					<div class="col-md-6 col-sm-12 text-right"> 
+						<div class="card-product mt-1 box" id='almirantado_ext'>
+							<div class="card-product-infos w-100">		
+								<h3 class='text-center'>MARÉGRAFO</h3>
+								<% if @almirantado_ext_data == {} || @almirantado_ext_data[:date_time] == [] %>
+									<p  class='text-center'><strong>A SER INSTALADO</strong></p>
+								<% else %>
+									<p  class='text-center'><strong>ÚLTIMO DADO:</strong> <%= @almirantado_ext_data[:date_time][0].strftime('%Y/%m/%d %H:%M')%></p>
+									<div class="row">
+										<div class="col-12 text-center">
+											<% if @almirantado_ext_data[:elev1][0] %>
+												<p><strong>MARÉ MEDIDA 1:</strong> <%= @almirantado_ext_data[:elev1][0].round(2)%> m</p>
+												<p><strong>MARÉ MEDIDA 2:</strong> <%= @almirantado_ext_data[:elev2][0].round(2)%> m</p>
+											<% elsif @almirantado_ext_data[:elev1][1] %>
+												<p><strong>MARÉ MEDIDA 1:</strong> <%= @almirantado_ext_data[:elev1][1].round(2)%> m</p>
+												<p><strong>MARÉ MEDIDA 2:</strong> <%= @almirantado_ext_data[:elev2][1].round(2)%> m</p>
+											<% elsif @almirantado_ext_data[:elev1][2] %>
+												<p><strong>MARÉ MEDIDA 1:</strong> <%= @almirantado_ext_data[:elev1][2].round(2)%> m</p>
+												<p><strong>MARÉ MEDIDA 2:</strong> <%= @almirantado_ext_data[:elev2][2].round(2)%> m</p>
+											<% else %>
+												<p><strong>MARÉ MEDIDA 1:</strong> -- m</p>
+												<p><strong>MARÉ MEDIDA 2:</strong> -- m</p>
+											<% end %>
+											<p><strong>MARÉ PREVISTA:</strong> <%= @tides[:elev][0].round(2)%> m</p>
+										</div>
+									</div>
+								<% end %>												
 							</div>
-						<% end %>												
+						</div>
 					</div>
 				</div>
 			</div>			
@@ -222,7 +204,12 @@
 		<% end %>
 		<div id="plotdata"
 			data-almirantadoint="<%= @almirantado_int_data.to_json %>"
+			data-almirantadoext="<%= @almirantado_ext_data.to_json %>"
+			data-tide="<%= @tides.to_json %>"
+
 			data-language='portuguese'>
+			<div id="tide-plot" class='graph'>
+			</div>
 			<div id="wspd-plot" class='graph'>
 			</div>
 			<div id="wdir-plot" class='graph'>
