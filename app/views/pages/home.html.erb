@@ -87,7 +87,7 @@
 								<% if @almirantado_int_data == {} || @almirantado_int_data[:date_time] == [] %>
 									<p  class='text-center'><strong>A SER INSTALADO</strong></p>
 								<% else %>
-									<p  class='text-center'><strong>ÚLTIMO DADO:</strong> <%= @almirantado_int_data[:date_time][0].strftime('%Y/%m/%d %H:%M')%></p>
+									<p  class='text-center'><strong>ÚLTIMO DADO:</strong> <%= @almirantado_int_data[:date_time][0].strftime('%d/%m/%Y %H:%M')%></p>
 									<div class="row">
 										<div class="col-6 text-center">
 											<% if @almirantado_int_data[:swvht][0] %>
@@ -144,23 +144,23 @@
 								<% if @almirantado_ext_data == {} || @almirantado_ext_data[:date_time] == [] %>
 									<p  class='text-center'><strong>A SER INSTALADO</strong></p>
 								<% else %>
-									<p  class='text-center'><strong>ÚLTIMO DADO:</strong> <%= @almirantado_ext_data[:date_time][0].strftime('%Y/%m/%d %H:%M')%></p>
+									<p  class='text-center'><strong>ÚLTIMO DADO:</strong> <%= @almirantado_ext_data[:date_time][0].strftime('%d/%m/%Y %H:%M')%></p>
 									<div class="row">
 										<div class="col-12 text-center">
 											<% if @almirantado_ext_data[:elev1][0] %>
-												<p><strong>MARÉ MEDIDA 1:</strong> <%= @almirantado_ext_data[:elev1][0].round(2)%> m</p>
-												<p><strong>MARÉ MEDIDA 2:</strong> <%= @almirantado_ext_data[:elev2][0].round(2)%> m</p>
+												<p><strong>MARÉ MEDIDA 1:</strong> <%= @almirantado_ext_data[:elev1][0].round(2)%> cm</p>
+												<p><strong>MARÉ MEDIDA 2:</strong> <%= @almirantado_ext_data[:elev2][0].round(2)%> cm</p>
 											<% elsif @almirantado_ext_data[:elev1][1] %>
-												<p><strong>MARÉ MEDIDA 1:</strong> <%= @almirantado_ext_data[:elev1][1].round(2)%> m</p>
-												<p><strong>MARÉ MEDIDA 2:</strong> <%= @almirantado_ext_data[:elev2][1].round(2)%> m</p>
+												<p><strong>MARÉ MEDIDA 1:</strong> <%= @almirantado_ext_data[:elev1][1].round(2)%> cm</p>
+												<p><strong>MARÉ MEDIDA 2:</strong> <%= @almirantado_ext_data[:elev2][1].round(2)%> cm</p>
 											<% elsif @almirantado_ext_data[:elev1][2] %>
-												<p><strong>MARÉ MEDIDA 1:</strong> <%= @almirantado_ext_data[:elev1][2].round(2)%> m</p>
-												<p><strong>MARÉ MEDIDA 2:</strong> <%= @almirantado_ext_data[:elev2][2].round(2)%> m</p>
+												<p><strong>MARÉ MEDIDA 1:</strong> <%= @almirantado_ext_data[:elev1][2].round(2)%> cm</p>
+												<p><strong>MARÉ MEDIDA 2:</strong> <%= @almirantado_ext_data[:elev2][2].round(2)%> cm</p>
 											<% else %>
-												<p><strong>MARÉ MEDIDA 1:</strong> -- m</p>
-												<p><strong>MARÉ MEDIDA 2:</strong> -- m</p>
+												<p><strong>MARÉ MEDIDA 1:</strong> -- cm</p>
+												<p><strong>MARÉ MEDIDA 2:</strong> -- cm</p>
 											<% end %>
-											<p><strong>MARÉ PREVISTA:</strong> <%= @tides[:elev][0].round(2)%> m</p>
+											<p><strong>MARÉ PREVISTA:</strong> <%= @tides[:elev][0].round(2)%> cm</p>
 										</div>
 									</div>
 								<% end %>												
@@ -209,6 +209,11 @@
 
 			data-language='portuguese'>
 			<div id="tide-plot" class='graph'>
+			</div>
+			<div class="text-center">
+				<h5><a href="https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/21-fernando_de_noronha.pdf" target="_blank" style="decoration: none">
+					CLIQUE AQUI PARA BAIXAR A TÁBUA DE MARÉS PARA FERNANDO DE NORONHA
+				</a></h5>
 			</div>
 			<div id="wspd-plot" class='graph'>
 			</div>

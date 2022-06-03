@@ -24,10 +24,11 @@ s.save!
 s= System.new(
   name: "almirantado_ext",
   buoy_id: 27, 
-  lat: "-3.867600", 
-  lon: "-32.426227"
+  lat: "-3.833902", 
+  lon: "-32.401730"
 )
 s.save!
+ 
 
 tables = CSV.parse(File.read("db/prevista.csv"), headers: true, :col_sep => "\t")
 

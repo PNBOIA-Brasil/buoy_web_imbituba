@@ -48,7 +48,7 @@ class PagesController < ApplicationController
   private
 
   def get_tide_data(start_date, end_date)
-    tides = Tide.where("date_time >= '#{start_date}' and date_time <= '#{end_date}'").order(date_time: :desc)
+    tides = Tide.where("date_time >= '#{Time.new(start_date.year, start_date.month, start_date.day) -2.hour}' and date_time <= '#{Time.new(end_date.year, end_date.month, end_date.day) -2.hour }'").order(date_time: :desc)
     params = {}
     params[:date_time] = []
     params[:elev] = []
@@ -96,7 +96,7 @@ class PagesController < ApplicationController
           params[:elev1] << item['elev1'].to_f
           params[:elev2] << item['elev2'].to_f
 
-          params[:date_time] << Time.parse(item['date_time'])
+          params[:date_time] << Time.parse(item['date_time']) - 2.hour
 
         end
         return params
@@ -163,7 +163,7 @@ class PagesController < ApplicationController
             params[:wvspread] << item['wvspread1'].to_f
           end
 
-          params[:date_time] << Time.parse(item['date_time'])
+          params[:date_time] << Time.parse(item['date_time']) - 2.hour
 
           if item['flag_wdir'].to_i > 0
             params[:wdir] << nil
