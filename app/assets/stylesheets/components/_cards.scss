@@ -82,6 +82,24 @@
   margin-top: 8px;
 }
 
+.animate-pisc{
+  animation: animate 
+  1.4s linear infinite;
+}
+
+@keyframes animate {
+  0% {
+      opacity: 0.2;
+  }
+
+  50% {
+      opacity: 1.0;
+  }
+
+  100% {
+      opacity: 0.2;
+  }
+}
 
 .card-product .card-product-infos {
   padding: 16px;

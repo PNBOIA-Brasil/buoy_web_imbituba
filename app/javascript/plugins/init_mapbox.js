@@ -89,8 +89,8 @@ const initMapbox = () => {
 			          <p class='m-0 p-0'><strong>LAT:</strong> ${Math.round(marker.lat*100)/100}, <strong>LON:</strong> ${Math.round(marker.lon*100)/100}</p>
 			          <p class='m-0 p-0'><strong>DATA:</strong> ${almirantado_extData.date_time[0].slice(0,10)}</p>
 			          <p class='m-0 p-0'><strong>HORA:</strong> ${almirantado_extData.date_time[0].slice(11,16)}</p>
-			          <p class='m-0 p-0'><strong>Maré Medida 1:</strong> ${almirantado_extData.elev1[0]} m</p>
-			          <p class='m-0 p-0'><strong>Maré Medida 2:</strong> ${almirantado_extData.elev2[0]} m</p></div>`))
+			          <p class='m-0 p-0'><strong>Maré Medida 1:</strong> -- cm</p>
+			          <p class='m-0 p-0'><strong>Maré Medida 2:</strong> -- cm</p></div>`))
 					.addTo(map);
 					markerAlmirantadoExt.getElement().addEventListener('click', () => {
 						almirantadoExtCard.classList.remove('card-animation');

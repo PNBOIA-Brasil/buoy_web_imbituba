@@ -26,7 +26,7 @@ const initPlotly = () => {
   }
 };
 
-const plotTide = (almirantadoextData, tideData, language) => {
+const plotTidenew = (almirantadoextData, tideData, language) => {
 
   const almirantadoextTide1 = {
     x: almirantadoextData.date_time,
@@ -63,6 +63,71 @@ const plotTide = (almirantadoextData, tideData, language) => {
 
 
   const data = [almirantadoextTide1, almirantadoextTide2, almirantadoextTide];
+
+  let text = 'MARÉS'
+  let title = 'Elevação do nível do mar (m)'
+  if (language === 'english') {
+    text = "TIDES"
+    title = 'Sea Level (m)'
+  }
+
+
+  var layout = {
+    title: {
+      text: text,
+      font: {
+        family: 'Fira Sans, sans-serif',
+        size: 24
+      },
+    },
+    plot_bgcolor:"rgba(0,0,0,0)",
+    paper_bgcolor:"rgba(0,0,0,0)",
+    xaxis: {
+      // title: 'Tempo',
+      showgrid: true,
+      tickformat: '%d/%m %Hh',
+      zeroline: false,
+      gridcolor: 'rgba(0,0,0,0.2)'
+    },
+    yaxis: {
+      title: title,
+      showgrid: true,
+      showline: true,
+      gridcolor: 'rgba(0,0,0,0.2)'
+    },
+    showlegend: true,
+    legend:{"orientation": "h",
+      x: 0,
+      y: -0.2,
+      traceorder: 'normal',
+      font: {
+        family: 'sans-serif',
+        size: 10,
+        color: '#000'
+      }
+    }
+  };
+  var config = {responsive: true, displayModeBar: false }
+
+  Plotly.newPlot('tide-plot', data, layout, config);
+
+};
+
+const plotTide = (almirantadoextData, tideData, language) => {
+
+  const almirantadoextTide = {
+    x: tideData.date_time,
+    y: tideData.elev,
+    mode: 'lines+markers',
+    name: 'MARÉ PREVISTA',
+    line: {
+      color: '#486641',
+      width: 2
+    }
+  };
+
+
+  const data = [almirantadoextTide];
 
   let text = 'MARÉS'
   let title = 'Elevação do nível do mar (m)'
