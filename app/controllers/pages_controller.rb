@@ -42,7 +42,7 @@ class PagesController < ApplicationController
     @almirantado_int_data = get_remobs(@almirantado_int, start_date, end_date)
     @almirantado_ext = System.where("name ='almirantado_ext' ") [0]    
     @almirantado_ext_data = get_tides(@almirantado_ext, start_date, end_date)
-    @tides = get_tide_data(start_date, end_date) 
+    @tides = get_tide_data(start_date, end_date)
   end
 
   private
@@ -80,7 +80,7 @@ class PagesController < ApplicationController
   def get_tides(buoy, start_date, end_date)
     if buoy.buoy_id
       begin
-        response = RestClient.get("http://remobsapi.herokuapp.com/api/v1/data_tides?buoy=#{buoy.buoy_id.to_i}&start_date=#{start_date.strftime("%Y-%m-%d")}&end_date=#{end_date.strftime("%Y-%m-%d")}&token=#{ENV["REMOBS_TOKEN"]}")
+        response = RestClient.get("https://remobsapi.herokuapp.com/api/v1/data_stations/station?station_id=1157&start_date=#{start_date.strftime("%Y-%m-%dT00:00:00")}&end_date=#{end_date.strftime("%Y-%m-%dT00:00:00")}&token=#{ENV["REMOBS_TOKEN"]}")
 
         remobs_response = JSON.parse(response)
 
@@ -91,11 +91,10 @@ class PagesController < ApplicationController
         params[:buoy_id] = []
 
         remobs_response.each do |item|
-          params[:buoy_id] << item['buoy_id']
+          params[:buoy_id] << item['station_id']
 
-          params[:elev1] << item['elev1'].to_f
-          params[:elev2] << item['elev2'].to_f
-
+          params[:elev1] << (item['water_level'].to_f * 100).round(1)
+          params[:elev2] << item['water_level_2'].to_f * 100.round(1)
           params[:date_time] << Time.parse(item['date_time']) - 2.hour
 
         end
