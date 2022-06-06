@@ -15,15 +15,16 @@ u.save!
 
 s= System.new(
   name: "almirantado_int",
-  buoy_id: 27, 
-  lat: "-3.805038", 
-  lon: "-32.369339"
+  buoy_id: 28, 
+  lat: "-3.7983416", 
+  lon: "-32.371525"
 )
 s.save!
 
+
 s= System.new(
   name: "almirantado_ext",
-  buoy_id: 27, 
+  buoy_id: 28, 
   lat: "-3.833902", 
   lon: "-32.401730"
 )
