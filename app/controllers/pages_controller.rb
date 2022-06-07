@@ -93,8 +93,8 @@ class PagesController < ApplicationController
         remobs_response.each do |item|
           params[:buoy_id] << item['station_id']
 
-          params[:elev1] << (item['water_level'].to_f * 100).round(1)
-          params[:elev2] << item['water_level_2'].to_f * 100.round(1)
+          params[:elev1] << (item['water_level'].to_f * 100).round(1) - 50
+          params[:elev2] << item['water_level_2'].to_f * 100.round(1) - 50
           params[:date_time] << Time.parse(item['date_time']) - 2.hour
 
         end

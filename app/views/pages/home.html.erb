@@ -150,17 +150,17 @@
 									<div class="row">
 										<div class="col-12 text-center">
 											<% if @almirantado_ext_data[:elev1][0] %>
-												<p><strong>MARÉ MEDIDA 1:</strong> <%= @almirantado_ext_data[:elev1][0].round(2)%> cm</p>
-												<p><strong>MARÉ MEDIDA 2:</strong> <%= @almirantado_ext_data[:elev2][0].round(2)%> cm</p>
+												<p><strong>MARÉ MEDIDA RLS:</strong> <%= @almirantado_ext_data[:elev1][0].round(2)%> cm</p>
+												<p><strong>MARÉ MEDIDA SE200:</strong> <%= @almirantado_ext_data[:elev2][0].round(2)%> cm</p>
 											<% elsif @almirantado_ext_data[:elev1][1] %>
-												<p><strong>MARÉ MEDIDA 1:</strong> <%= @almirantado_ext_data[:elev1][1].round(2)%> cm</p>
-												<p><strong>MARÉ MEDIDA 2:</strong> <%= @almirantado_ext_data[:elev2][1].round(2)%> cm</p>
+												<p><strong>MARÉ MEDIDA RLS:</strong> <%= @almirantado_ext_data[:elev1][1].round(2)%> cm</p>
+												<p><strong>MARÉ MEDIDA SE200:</strong> <%= @almirantado_ext_data[:elev2][1].round(2)%> cm</p>
 											<% elsif @almirantado_ext_data[:elev1][2] %>
-												<p><strong>MARÉ MEDIDA 1:</strong> <%= @almirantado_ext_data[:elev1][2].round(2)%> cm</p>
-												<p><strong>MARÉ MEDIDA 2:</strong> <%= @almirantado_ext_data[:elev2][2].round(2)%> cm</p>
+												<p><strong>MARÉ MEDIDA RLS:</strong> <%= @almirantado_ext_data[:elev1][2].round(2)%> cm</p>
+												<p><strong>MARÉ MEDIDA SE200:</strong> <%= @almirantado_ext_data[:elev2][2].round(2)%> cm</p>
 											<% else %>
-												<p><strong>MARÉ MEDIDA 1:</strong> -- cm</p>
-												<p><strong>MARÉ MEDIDA 2:</strong> -- cm</p>
+												<p><strong>MARÉ MEDIDA RLS:</strong> -- cm</p>
+												<p><strong>MARÉ MEDIDA SE200:</strong> -- cm</p>
 											<% end %>
 											<p><strong>MARÉ PREVISTA:</strong> <%= @tides[:elev][0].round(2)%> cm</p>
 										</div>

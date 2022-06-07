@@ -32,7 +32,7 @@ const plotTide = (almirantadoextData, tideData, language) => {
     x: almirantadoextData.date_time,
     y: almirantadoextData.elev1,
     mode: 'lines+markers',
-    name: 'MARÉ MEDIDA 1',
+    name: 'MARÉ MEDIDA RLS',
     line: {
       color: '#c22d45',
       width: 2
@@ -43,7 +43,7 @@ const plotTide = (almirantadoextData, tideData, language) => {
     x: almirantadoextData.date_time,
     y: almirantadoextData.elev2,
     mode: 'lines+markers',
-    name: 'MARÉ MEDIDA 2',
+    name: 'MARÉ MEDIDA SE200',
     line: {
       color: '#2f42ad',
       width: 2
