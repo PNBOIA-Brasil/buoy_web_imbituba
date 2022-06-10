@@ -63,7 +63,7 @@
 			</div>
 			<div class="col-sm-12 col-md-6 col-lg-6 mt-2 align-items-center">
 				<div class= "card-project text-align-center">
-					<%= image_tag "maregrafo_noronha.jpg"%>
+					<%= image_tag "maregrafo_noronha.png"%>
 				</div>	
 			</div>			
 		</div>
@@ -150,19 +150,20 @@
 									<div class="row">
 										<div class="col-12 text-center">
 											<% if @almirantado_ext_data[:elev1][0] %>
-												<p><strong>MARÉ MEDIDA RLS:</strong> <%= @almirantado_ext_data[:elev1][0].round(2)%> cm</p>
-												<p><strong>MARÉ MEDIDA SE200:</strong> <%= @almirantado_ext_data[:elev2][0].round(2)%> cm</p>
+												<p title="medição por radar"><strong>MARÉ MEDIDA RLS*:</strong> <%= @almirantado_ext_data[:elev1][0].round(0)%> cm</p>
+												<p title="medição por boia e contra-peso"><strong>MARÉ MEDIDA SE200**:</strong> <%= @almirantado_ext_data[:elev2][0].round(0)%> cm</p>
 											<% elsif @almirantado_ext_data[:elev1][1] %>
-												<p><strong>MARÉ MEDIDA RLS:</strong> <%= @almirantado_ext_data[:elev1][1].round(2)%> cm</p>
-												<p><strong>MARÉ MEDIDA SE200:</strong> <%= @almirantado_ext_data[:elev2][1].round(2)%> cm</p>
+												<p title="medição por radar"><strong>MARÉ MEDIDA RLS*:</strong> <%= @almirantado_ext_data[:elev1][1].round(0)%> cm</p>
+												<p title="medição por boia e contra-peso"><strong>MARÉ MEDIDA SE200**:</strong> <%= @almirantado_ext_data[:elev2][1].round(0)%> cm</p>
 											<% elsif @almirantado_ext_data[:elev1][2] %>
-												<p><strong>MARÉ MEDIDA RLS:</strong> <%= @almirantado_ext_data[:elev1][2].round(2)%> cm</p>
-												<p><strong>MARÉ MEDIDA SE200:</strong> <%= @almirantado_ext_data[:elev2][2].round(2)%> cm</p>
+												<p title="medição por radar"><strong>MARÉ MEDIDA RLS*:</strong> <%= @almirantado_ext_data[:elev1][2].round(0)%> cm</p>
+												<p title="medição por boia e contra-peso"><strong>MARÉ MEDIDA SE200**:</strong> <%= @almirantado_ext_data[:elev2][0].round(0)%> cm</p>
 											<% else %>
-												<p><strong>MARÉ MEDIDA RLS:</strong> -- cm</p>
-												<p><strong>MARÉ MEDIDA SE200:</strong> -- cm</p>
+												<p title="medição por radar"><strong>MARÉ MEDIDA RLS*:</strong> -- cm</p>
+												<p title="medição por boia e contra-peso"><strong>MARÉ MEDIDA SE200**:</strong> -- cm</p>
 											<% end %>
-											<p><strong>MARÉ PREVISTA:</strong> <%= @tides[:elev][0].round(2)%> cm</p>
+											<p class="mb-1"><strong>MARÉ PREVISTA:</strong> <%= @tides[:elev][0].round(0)%> cm</p>
+											<div class='observation-tide'>*radar / **boia e contra-peso</div>
 										</div>
 									</div>
 								<% end %>												
@@ -212,11 +213,21 @@
 			data-language='portuguese'>
 			<div id="tide-plot" class='graph'>
 			</div>
-			<div class="text-center">
+			<div class="observation-tide">
+				*radar / **boia e contra-peso.
+			</div>
+			<div class="observation-tide">
+				***A maré prevista foi gerada a partir de dados observados
+				em 1989, quando as características costeiras, morfológicas e oceanográficas da região
+				eram diferentes das atuais. A maré prevista será atualizada com os novos dados
+				coletados assim que for obtido o período mínimo de observação para realizar a previsão.
+			</div>
+			<div class="text-center mt-2">
 				<h5 class='animate-pisc'><a href="https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/21-fernando_de_noronha.pdf" target="_blank" style="decoration: none">
 					CLIQUE AQUI PARA ACESSAR A TÁBUA DE MARÉS PARA FERNANDO DE NORONHA
 				</a></h5>
 			</div>
+
 			<div id="wspd-plot" class='graph'>
 			</div>
 			<div id="wdir-plot" class='graph'>
