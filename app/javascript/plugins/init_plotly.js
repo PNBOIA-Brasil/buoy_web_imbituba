@@ -29,8 +29,8 @@ const initPlotly = () => {
 const plotTide = (almirantadoextData, tideData, language) => {
 
   const almirantadoextTide1 = {
-    x: almirantadoextData.date_time,
-    y: almirantadoextData.elev1,
+    x: almirantadoextData.date_time_elev1.filter(n => n),
+    y: almirantadoextData.elev1.filter(n => n),
     mode: 'lines+markers',
     name: 'MARÉ MEDIDA RLS*',
     line: {
@@ -40,7 +40,7 @@ const plotTide = (almirantadoextData, tideData, language) => {
   };
 
   const almirantadoextTide2 = {
-    x: almirantadoextData.date_time,
+    x: almirantadoextData.date_time_elev2,
     y: almirantadoextData.elev2,
     mode: 'lines+markers',
     name: 'MARÉ MEDIDA SE200**',
@@ -117,8 +117,8 @@ const plotTide = (almirantadoextData, tideData, language) => {
 const plotWvdir = (almirantadointData, language) => {
 
     const almirantadointWvdir = {
-      x: almirantadointData.date_time,
-      y: almirantadointData.wvdir,
+      x: almirantadointData.date_time_wvdir.filter(n => n),
+      y: almirantadointData.wvdir.filter(n => n),
       mode: 'lines+markers',
       name: 'NORONHA',
       line: {
@@ -184,8 +184,8 @@ const plotWvdir = (almirantadointData, language) => {
 const plotWdir = (almirantadointData, language) => {
 
     const almirantadointWdir = {
-      x: almirantadointData.date_time,
-      y: almirantadointData.wdir,
+      x: almirantadointData.date_time_wdir.filter(n => n),
+      y: almirantadointData.wdir.filter(n => n),
       mode: 'lines+markers',
       name: '',
       line: {
@@ -249,7 +249,7 @@ const plotWdir = (almirantadointData, language) => {
 const plotWdirg = (almirantadointData, language) => {
 
     const almirantadointWdir = {
-      theta: almirantadointData.wdirg,
+      theta: almirantadointData.wdirg.filter(n => n),
       name: 'almirantado_int',
       line: {
         color: '#c22d45',
@@ -295,7 +295,7 @@ const plotWdirg = (almirantadointData, language) => {
 const plotWvdirg = (almirantadointData, language) => {
 
     const almirantadointWvdir = {
-      theta: almirantadointData.wvdirg,
+      theta: almirantadointData.wvdirg.filter(n => n),
       name: 'almirantado_int',
       line: {
         color: '#c22d45',
@@ -340,8 +340,8 @@ const plotWvdirg = (almirantadointData, language) => {
 const plotWspd = (almirantadointData, language) => {
 
     const almirantadointWspd = {
-      x: almirantadointData.date_time,
-      y: almirantadointData.wspd,
+      x: almirantadointData.date_time_wspd.filter(n => n),
+      y: almirantadointData.wspd.filter(n => n),
       mode: 'lines+markers',
       name: '',
       line: {
@@ -405,8 +405,8 @@ const plotWspd = (almirantadointData, language) => {
 const plotSwvht = (almirantadointData, language) => {
 
     const almirantadointSwvht = {
-      x: almirantadointData.date_time,
-      y: almirantadointData.swvht,
+      x: almirantadointData.date_time_swvht.filter(n => n),
+      y: almirantadointData.swvht.filter(n => n),
       mode: 'lines+markers',
       name: '',
       line: {
@@ -469,8 +469,8 @@ const plotSwvht = (almirantadointData, language) => {
 const plotTp = (almirantadointData, language) => {
 
   const almirantadointtp = {
-    x: almirantadointData.date_time,
-    y: almirantadointData.tp,
+    x: almirantadointData.date_time_tp.filter(n => n),
+    y: almirantadointData.tp.filter(n => n),
     mode: 'lines+markers',
     name: '',
     line: {
@@ -535,8 +535,8 @@ const plotTp = (almirantadointData, language) => {
 const plotSst = (almirantadointData, language) => {
 
     const almirantadointSst = {
-      x: almirantadointData.date_time,
-      y: almirantadointData.sst,
+      x: almirantadointData.date_time_sst.filter(n => n),
+      y: almirantadointData.sst.filter(n => n),
       mode: 'lines+markers',
       name: '',
       line: {

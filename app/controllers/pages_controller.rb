@@ -87,14 +87,27 @@ class PagesController < ApplicationController
         params = {}
         params[:elev1] = []
         params[:elev2] = []
+        params[:date_time_elev1] = []
+        params[:date_time_elev2] = []
         params[:date_time] = []
+
         params[:buoy_id] = []
 
         remobs_response.each do |item|
           params[:buoy_id] << item['station_id']
 
           params[:elev1] << (item['water_level'].to_f * 100).round(1) - 40
+          if (item['water_level'].to_f * 100).round(1) - 40
+            params[:date_time_elev1] << Time.parse(item['date_time']) - 2.hour
+          else
+            params[:date_time_elev1] << nil
+          end
           params[:elev2] << item['water_level_2'].to_f * 100.round(1) - 40
+          if (item['water_level_2'].to_f * 100).round(1) - 40
+            params[:date_time_elev2] << Time.parse(item['date_time']) - 2.hour
+          else
+            params[:date_time_elev2] << nil
+          end
           params[:date_time] << Time.parse(item['date_time']) - 2.hour
 
         end
@@ -115,20 +128,25 @@ class PagesController < ApplicationController
         remobs_response = JSON.parse(response)
 
         params = {}
+        params[:buoy_id] = []
         params[:swvht] = []
-        params[:mxwvht] = []
         params[:tp] = []
         params[:sst] = []
-        params[:wvspread] = []
         params[:wvdir] = []
-        params[:date_time] = []
-        params[:buoy_id] = []
         params[:wspd] = []
         params[:wdir] = []
-        params[:gust] = []
         params[:wvdirg] = []
         params[:wdirg] = []
-
+        params[:date_time] = []
+        params[:date_time_swvht] = []
+        params[:date_time_tp] = []
+        params[:date_time_sst] = []
+        params[:date_time_wvdir] = []
+        params[:date_time_wspd] = []
+        params[:date_time_wdir] = []
+        params[:date_time_wvdirg] = []
+        params[:date_time_wdirg] = []
+        
         remobs_response.each do |item|
           params[:buoy_id] << item['buoy_id']
 
@@ -137,17 +155,21 @@ class PagesController < ApplicationController
           else
             params[:swvht] << item['swvht1'].to_f
           end
-
-          if item['flag_mxwvht'].to_i > 0
-            params[:mxwwvht] << nil
+          if params[:swvht][-1]
+            params[:date_time_swvht] << Time.parse(item['date_time']) - 2.hour
           else
-            params[:mxwvht] << item['mxwvht1'].to_f
+            params[:date_time_swvht] << nil
           end
-
+          
           if item['flag_tp'].to_i > 0
             params[:tp] << nil
           else
             params[:tp] << item['tp1'].to_f
+          end
+          if params[:tp][-1]
+            params[:date_time_tp] << Time.parse(item['date_time']) - 2.hour
+          else
+            params[:date_time_tp] << nil
           end
 
           if item['flag_sst'].to_i > 0
@@ -155,19 +177,22 @@ class PagesController < ApplicationController
           else
             params[:sst] << item['sst'].to_f
           end
-
-          if item['flag_wvspread'].to_i > 0
-            params[:wvspread] << nil
+          if params[:sst][-1]
+            params[:date_time_sst] << Time.parse(item['date_time']) - 2.hour
           else
-            params[:wvspread] << item['wvspread1'].to_f
+            params[:date_time_sst] << nil
           end
 
-          params[:date_time] << Time.parse(item['date_time']) - 2.hour
 
           if item['flag_wdir'].to_i > 0
             params[:wdir] << nil
           else
             params[:wdir] << item['wdir'].to_i
+          end
+          if params[:wdir][-1]
+            params[:date_time_wdir] << Time.parse(item['date_time']) - 2.hour
+          else
+            params[:date_time_wdir] << nil
           end
 
           if item['flag_wdir'].to_i > 0
@@ -175,17 +200,17 @@ class PagesController < ApplicationController
           else
             params[:wdirg] << (item['wdir'].to_i/10)*10
           end
-
-          if item['flag_gust'].to_i > 0
-            params[:gust] << nil
+          if params[:wdirg][-1]
+            params[:date_time_wdirg] << Time.parse(item['date_time']) - 2.hour
           else
-            params[:gust] << item['gust'].to_f
+            params[:date_time_wdirg] << nil
           end
 
-          if item['flag_wspd'].to_i > 0
-            params[:wspd] << nil
+          params[:wspd] << item['wspd'].to_f
+          if params[:wspd][-1]
+            params[:date_time_wspd] << Time.parse(item['date_time']) - 2.hour
           else
-            params[:wspd] << item['wspd'].to_f
+            params[:date_time_wspd] << nil
           end
 
           if item['flag_wvdir'].to_i > 0
@@ -193,12 +218,24 @@ class PagesController < ApplicationController
           else
             params[:wvdir] << item['wvdir1'].to_f
           end
+          if params[:wvdir][-1]
+            params[:date_time_wvdir] << Time.parse(item['date_time']) - 2.hour
+          else
+            params[:date_time_wvdir] << nil
+          end
 
           if item['flag_wvdir'].to_i > 0
             params[:wvdirg] << nil
           else
             params[:wvdirg] << (item['wvdir1'].to_i/10)*10
           end
+          if params[:wvdirg][-1]
+            params[:date_time_wvdirg] << Time.parse(item['date_time']) - 2.hour
+          else
+            params[:date_time_wvdirg] << nil
+          end
+
+          params[:date_time] << Time.parse(item['date_time']) - 2.hour
         end
         return params
       rescue
