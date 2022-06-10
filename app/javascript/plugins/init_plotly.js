@@ -54,7 +54,7 @@ const plotTide = (almirantadoextData, tideData, language) => {
     x: tideData.date_time,
     y: tideData.elev,
     mode: 'lines+markers',
-    name: 'MARÉ PREVISTA',
+    name: 'MARÉ PREVISTA***',
     line: {
       color: '#486641',
       width: 2
