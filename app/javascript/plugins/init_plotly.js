@@ -65,7 +65,7 @@ const plotTide = (almirantadoextData, tideData, language) => {
   const data = [almirantadoextTide1, almirantadoextTide2, almirantadoextTide];
 
   let text = 'MARÉS'
-  let title = 'Elevação do nível do mar (m)'
+  let title = 'Elevação do nível do mar (cm)'
   if (language === 'english') {
     text = "TIDES"
     title = 'Sea Level (m)'

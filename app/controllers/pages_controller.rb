@@ -17,11 +17,13 @@ class PagesController < ApplicationController
 
   def home
     if params[:commit]
+      @popup = false
       start_date = params[:start_date]
       end_date = params[:end_date]
       start_date = Date.parse start_date
       end_date = Date.parse end_date
     else
+      @popup = true
       start_date = (Time.now - 1.day)
       end_date = (Time.now + 1.day)
     end
@@ -38,6 +40,8 @@ class PagesController < ApplicationController
       end_date = Time.now + 1.day
     end
 
+    @start_date = start_date
+    @end_date = end_date
     @almirantado_int = System.where("name ='almirantado_int' ") [0]    
     @almirantado_int_data = get_remobs(@almirantado_int, start_date, end_date)
     @almirantado_ext = System.where("name ='almirantado_ext' ") [0]    

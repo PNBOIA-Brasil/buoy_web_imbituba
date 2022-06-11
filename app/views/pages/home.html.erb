@@ -171,6 +171,11 @@
 						</div>
 					</div>
 				</div>
+				<div class="text-center mt-2">
+					<h5 class='animate-pisc'><a href="https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/21-fernando_de_noronha.pdf" target="_blank" style="decoration: none">
+						CLIQUE AQUI PARA ACESSAR A TÁBUA DE MARÉS PARA FERNANDO DE NORONHA
+					</a></h5>
+				</div>
 			</div>			
 		</div>
 	</div>
@@ -190,7 +195,8 @@
 				<%= date_field_tag :start_date,
 					params[:start_date],
 					class: "form-control input-sm p-0",
-					placeholder: "Data Inicial"
+					placeholder: "Data Inicial",
+					value: @start_date.strftime("%Y-%m-%d")
 				%>
 			</div>
 			<div>
@@ -198,7 +204,8 @@
 				<%= date_field_tag :end_date,
 					params[:end_date],
 					class: "form-control input-sm p-0",
-					placeholder: "Data Final"
+					placeholder: "Data Final",
+					value: @end_date.strftime("%Y-%m-%d")
 				%>
 			</div>
 			<div class='search w-100' style="writing-mode: vertical-rl">
@@ -222,12 +229,6 @@
 				eram diferentes das atuais. A maré prevista será atualizada com os novos dados
 				coletados assim que for obtido o período mínimo de observação para realizar a previsão.
 			</div>
-			<div class="text-center mt-2">
-				<h5 class='animate-pisc'><a href="https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/21-fernando_de_noronha.pdf" target="_blank" style="decoration: none">
-					CLIQUE AQUI PARA ACESSAR A TÁBUA DE MARÉS PARA FERNANDO DE NORONHA
-				</a></h5>
-			</div>
-
 			<div id="wspd-plot" class='graph'>
 			</div>
 			<div id="wdir-plot" class='graph'>
@@ -258,7 +259,11 @@
 	</div>
 </div>
 
-<div class="full-screen flex-container-center" id='first-full-screen'>
+<% if @popup %>
+	<div class="full-screen flex-container-center" data-pop="<%= @popup %>" id='first-full-screen'>
+<% else %>
+	<div class="inactive-tab full-screen flex-container-center" data-pop="<%= @popup %>" id='first-full-screen'>
+<% end %>
 	<p><i class="fas fa-times-circle"></i></p>
 	<div class='info-text mt-2 text-center'><strong>NORONHA.LIVE</strong></div>
 	<h4 class='mt-2 text-center'><strong>Dados em tempo real para Fernando de Noronha:</strong></h4>
