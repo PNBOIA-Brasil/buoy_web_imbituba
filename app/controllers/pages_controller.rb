@@ -1,5 +1,7 @@
+require 'csv'
+
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:home, :position]
+  skip_before_action :authenticate_user!, only: [:home, :english, :download]
 
   def admin
     if current_user.admin
@@ -14,6 +16,12 @@ class PagesController < ApplicationController
     @almirantado_int_data = get_drifter(@almirantado_int)
     @almirantado_int = System.where("name ='almirantado_int' ") [0]    
   end  
+
+  def download
+    params.permit!
+    file_name = "tide_#{params[:start_date]}_#{params[:end_date]}.csv"
+    send_data params[:meas_tides].gsub!(';',"\n"), filename: file_name
+  end
 
   def home
     if params[:commit]
@@ -47,8 +55,59 @@ class PagesController < ApplicationController
     @almirantado_ext = System.where("name ='almirantado_ext' ") [0]    
     @almirantado_ext_data = get_tides(@almirantado_ext, start_date, end_date)
     @tides = get_tide_data(start_date, end_date)
+
+    down_values = @almirantado_ext_data.slice(:date_time, :elev1, :elev2).values
+    @csv_string = CSV.generate do |csv|
+      csv << ["date_time(GMT-2)", "RLS(cm)", "SE200(cm)"]
+      down_values[0].each_with_index do |value, idx|
+        csv << [down_values[0][idx], down_values[1][idx], down_values[2][idx]]
+      end
+    end
+    @csv_string.gsub!(/[\r\n]+/, ';')
   end
 
+  def english
+    if params[:commit]
+      @popup = false
+      start_date = params[:start_date]
+      end_date = params[:end_date]
+      start_date = Date.parse start_date
+      end_date = Date.parse end_date
+    else
+      @popup = true
+      start_date = (Time.now - 1.day)
+      end_date = (Time.now + 1.day)
+    end
+    if start_date == nil
+      start_date = (Time.now - 5.day)
+    end
+    if end_date == nil
+      end_date = Time.now + 1.day
+    end
+    if start_date < (Time.now - 5.day)
+      start_date = (Time.now - 5.day)
+    end
+    if end_date < start_date
+      end_date = Time.now + 1.day
+    end
+
+    @start_date = start_date
+    @end_date = end_date
+    @almirantado_int = System.where("name ='almirantado_int' ") [0]    
+    @almirantado_int_data = get_remobs(@almirantado_int, start_date, end_date)
+    @almirantado_ext = System.where("name ='almirantado_ext' ") [0]
+    @almirantado_ext_data = get_tides(@almirantado_ext, start_date, end_date)
+    @tides = get_tide_data(start_date, end_date)
+    down_values = @almirantado_ext_data.slice(:date_time, :elev1, :elev2).values
+    @csv_string = CSV.generate do |csv|
+      csv << ["date_time(GMT-2)", "RLS(cm)", "SE200(cm)"]
+      down_values[0].each_with_index do |value, idx|
+        csv << [down_values[0][idx], down_values[1][idx], down_values[2][idx]]
+      end
+    end
+    @csv_string.gsub!(/[\r\n]+/, ';')
+  end
+    
   private
 
   def get_tide_data(start_date, end_date)
@@ -89,17 +148,13 @@ class PagesController < ApplicationController
         remobs_response = JSON.parse(response)
 
         params = {}
+        params[:date_time] = []
         params[:elev1] = []
         params[:elev2] = []
         params[:date_time_elev1] = []
         params[:date_time_elev2] = []
-        params[:date_time] = []
-
-        params[:buoy_id] = []
 
         remobs_response.each do |item|
-          params[:buoy_id] << item['station_id']
-
           params[:elev1] << (item['water_level'].to_f * 100).round(1) - 40
           if (item['water_level'].to_f * 100).round(1) - 40
             params[:date_time_elev1] << Time.parse(item['date_time']) - 2.hour

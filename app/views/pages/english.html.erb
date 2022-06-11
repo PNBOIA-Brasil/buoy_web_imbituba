@@ -1,0 +1,286 @@
+<%= render 'shared/navbar_english' %>
+
+<div class="front-page" style="background-image: url('<%= image_path 'noronha2.jpg' %>')" id="home">
+  <div class="container banner">
+    <div class="row">
+      <div class="col-sm-12 col-md-6 col-lg-6 text-right">         
+      </div>
+      <div class="col-sm-12 col-md-6 col-lg-6 text-right ">
+        <div class="front-page-content1 pb-5">
+          <h1>Meteoceanographic Data</h1>
+					<p>
+      			<span id="banner-typed-text"></span>
+    			</p>
+        </div>
+        <div class="front-page-content3">
+          <a href="#tempo-real">
+            <div class="orange-button">
+              DATA
+            </div>
+          </a>
+          <a href="#projetos">
+            <div class="white-button">
+              MORE INFO
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="projetos">
+	<div class= "container text-justify" id="projetos">
+		<h2>GLOSS-BRASIL and REMObs PROJECTS</h2>
+		<div class="row align-items-center">
+			<div class="col-sm-12 col-md-6 col-lg-6 mt-2 align-items-center">	
+				<div class= "card-project text-align-center ">
+					<%= image_tag "boia_noronha.jpg"%>
+				</div>			
+			</div>
+			<div class="col-sm-12 col-md-6 col-lg-6 mt-2 align-items-center">
+        <h6>The <strong>GLOSS-BRASIL</strong> and <strong>REMObs</strong> projects
+        came together to create a complete system to
+        monitoring the conditions of waves, winds and tides in the
+        Fernando de Noronha Archipelago. To this end, we set up a network to
+        collect environmental data through the use of moored wave buoys and
+        tide gauge stations. <strong>Here you can access the data
+        collected in real time by our systems.</strong> </h6>
+			</div>			
+		</div>
+		<div class="row align-items-center mt-2">
+			<div class="col-sm-12 col-md-6 col-lg-6 mt-2 align-items-center">
+        <h6>Managed by the <strong>Brazilian Navy Hydrography Center (CHM)</strong>, the
+        <strong>GLOSS-BRASIL</strong> plays an important role in determining the
+        variations in sea level to aid environmental sciences and to
+        improve social and economic planning.</h6>
+        <h6>The project <strong>REMObs (REMO Observacional)</strong>, a partnership between <strong>CHM</strong> and
+        <strong>PETROBRAS</strong>, contemplates a union of efforts for the development and
+        consolidation of a National Meteoceanographic Buoy (BMO-BR). And for that,
+        it also foresees the establishment of an operational data collection network
+        in the South Atlantic, a factor of great importance for the calibration
+        and validation of meteoceanographic prediction models.</h6>
+  			<h6><strong>This data collection system in Noronha has the support of our partners
+					<a href="https://www.icmbio.gov.br/portal/" target="_blank" style="decoration: none">ICMBio</a> and
+					<a href="https://surfguru.com.br/" target="_blank" style="decoration: none">SURFGURU</a></strong>.</h6>.
+			</div>
+			<div class="col-sm-12 col-md-6 col-lg-6 mt-2 align-items-center">
+				<div class= "card-project text-align-center">
+					<%= image_tag "maregrafo_noronha.png"%>
+				</div>	
+			</div>			
+		</div>
+	</div>
+</div>
+<div class="tempo-real">
+	<div class="container" id= "tempo-real">  
+		<h2 class="text-center mt-4">REAL TIME DATA</h2>        
+		<div class="row">
+			<div class="col-sm-12 col-md-12 col-lg-12 text-right"> 
+				<div id="map"
+							style="width: 100%; height: 400px;"
+							data-markers="<%= [@almirantado_int, @almirantado_ext].to_json %>"
+							data-almirantadoint="<%= @almirantado_int_data.to_json %>"
+							data-almirantadoext="<%= @almirantado_ext_data.to_json %>"
+							data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>"
+              data-language="english">
+				</div>
+				<div class="row">
+					<div class="col-md-6 col-sm-12 text-right"> 
+						<div class="card-product mt-1 box" id='almirantado_int'>
+							<div class="card-product-infos w-100">		
+								<h3 class='text-center'>BUOY</h3>
+								<% if @almirantado_int_data == {} || @almirantado_int_data[:date_time] == [] %>
+									<p  class='text-center'><strong>NOT WORKING STATION</strong></p>
+								<% else %>
+									<p  class='text-center'><strong>LAST DATA:</strong> <%= @almirantado_int_data[:date_time][0].strftime('%m/%d/%Y %H:%M')%></p>
+									<div class="row">
+										<div class="col-6 text-center">
+											<% if @almirantado_int_data[:swvht][0] %>
+												<p><strong>WAVE H.:</strong> <%= @almirantado_int_data[:swvht][0].round(1)%> m</p>
+												<p><strong>WAVE PER.:</strong> <%= @almirantado_int_data[:tp][0].round(1)%> s</p>
+												<p><strong>WAVE DIR.:</strong> <%= @almirantado_int_data[:wvdir][0].round()%>°</p>
+											<% elsif @almirantado_int_data[:swvht][1] %>
+												<p><strong>WAVE H.:</strong> <%= @almirantado_int_data[:swvht][1].round(1)%> m</p>
+												<p><strong>WAVE PER.:</strong> <%= @almirantado_int_data[:tp][1].round(1)%> s</p>
+												<p><strong>WAVE DIR.:</strong> <%= @almirantado_int_data[:wvdir][1].round()%>°</p>
+											<% elsif @almirantado_int_data[:swvht][2] %>
+												<p><strong>WAVE H.:</strong> <%= @almirantado_int_data[:swvht][2].round(1)%> m</p>
+												<p><strong>WAVE PER.:</strong> <%= @almirantado_int_data[:tp][2].round(1)%> s</p>
+												<p><strong>WAVE DIR.:</strong> <%= @almirantado_int_data[:wvdir][2].round()%>°</p>
+											<% else %>
+												<p><strong>WAVE H.:</strong> -- m</p>
+												<p><strong>WAVE PER.:</strong> -- s</p>
+												<p><strong>WAVE DIR.:</strong> -- °</p>
+											<% end %>
+										</div>
+										<div class="col-6 text-center"> 								
+											<% if @almirantado_int_data[:sst][0] %>
+												<p><strong>SST:</strong> <%= @almirantado_int_data[:sst][0].round()%> °C</p>
+											<% elsif @almirantado_int_data[:sst][1] %>
+												<p><strong>SST:</strong> <%= @almirantado_int_data[:sst][1].round()%> °C</p>
+											<% elsif @almirantado_int_data[:sst][2] %>
+												<p><strong>SST:</strong> <%= @almirantado_int_data[:sst][2].round()%> °C</p>
+											<% else %>
+												<p><strong>SST:</strong> -- °C</p>
+											<% end %>
+											<% if @almirantado_int_data[:wspd][0] %>
+												<p><strong>WIND VEL.:</strong> <%= @almirantado_int_data[:wspd][0].round()%> m/s</p>
+												<p><strong>WIND DIR.:</strong> <%= @almirantado_int_data[:wdir][0].round()%> °</p>
+											<% elsif @almirantado_int_data[:wspd][1] %>
+												<p><strong>WIND VEL.:</strong> <%= @almirantado_int_data[:wspd][1].round()%> m/s</p>
+												<p><strong>WIND DIR.:</strong> <%= @almirantado_int_data[:wdir][1].round()%> °</p>
+											<% elsif @almirantado_int_data[:wspd][2] %>
+												<p><strong>WIND VEL.:</strong> <%= @almirantado_int_data[:wspd][2].round()%> m/s</p>
+												<p><strong>WIND DIR.:</strong> <%= @almirantado_int_data[:wdir][2].round()%> °</p>
+											<% else %>
+												<p><strong>WIND VEL.:</strong> -- m/s</p>
+												<p><strong>WIND DIR.:</strong> -- °</p>
+											<% end %>
+										</div>
+									</div>
+								<% end %>												
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 col-sm-12 text-right"> 
+						<div class="card-product mt-1 box" id='almirantado_ext'>
+							<div class="card-product-infos w-100">		
+								<h3 class='text-center'>TIDE GAUGE</h3>
+								<% if @almirantado_ext_data == {} || @almirantado_ext_data[:date_time] == [] %>
+									<p  class='text-center'><strong>NOT WORKING STATION</strong></p>
+								<% else %>
+									<p  class='text-center'><strong>LAST DATA:</strong> <%= @almirantado_ext_data[:date_time][0].strftime('%m/%d/%Y %H:%M')%></p>
+									<div class="row">
+										<div class="col-12 text-center">
+											<% if @almirantado_ext_data[:elev1][0] %>
+												<p title="radar measurement"><strong>MEASURED TIDE RLS*:</strong> <%= @almirantado_ext_data[:elev1][0].round(0)%> cm</p>
+												<p title="float-operated measurement"><strong>MEASURED TIDE SE200**:</strong> <%= @almirantado_ext_data[:elev2][0].round(0)%> cm</p>
+											<% elsif @almirantado_ext_data[:elev1][1] %>
+												<p title="radar measurement"><strong>MEASURED TIDE RLS*:</strong> <%= @almirantado_ext_data[:elev1][1].round(0)%> cm</p>
+												<p title="float-operated measurement"><strong>MEASURED TIDE SE200**:</strong> <%= @almirantado_ext_data[:elev2][1].round(0)%> cm</p>
+											<% elsif @almirantado_ext_data[:elev1][2] %>
+												<p title="radar measurement"><strong>MEASURED TIDE RLS*:</strong> <%= @almirantado_ext_data[:elev1][2].round(0)%> cm</p>
+												<p title="float-operated measurement"><strong>MEASURED TIDE SE200**:</strong> <%= @almirantado_ext_data[:elev2][0].round(0)%> cm</p>
+											<% else %>
+												<p title="radar measurement"><strong>MEASURED TIDE RLS*:</strong> -- cm</p>
+												<p title="float-operated measurement"><strong>MEASURED TIDE SE200**:</strong> -- cm</p>
+											<% end %>
+											<p class="mb-1"><strong>PREDICTED TIDE:</strong> <%= @tides[:elev][0].round(0)%> cm</p>
+											<div class='observation-tide'>*radar / **float-operated</div>
+										</div>
+									</div>
+								<% end %>												
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="text-center mt-2">
+					<h5 class='animate-pisc'><a href="https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/21-fernando_de_noronha.pdf" target="_blank" style="decoration: none">
+            CLICK HERE TO ACCESS THE TIDE TABLE FOR FERNANDO DE NORONHA
+					</a></h5>
+				</div>
+			</div>			
+		</div>
+	</div>
+</div>
+
+<div class="image-strip text-center" id="fundo">
+  <div class="container reveal">
+    <div class="line"></div>
+  </div>
+</div>
+
+<div class="graficos  mt-2">
+	<div class="container" id="graficos">
+		<%= form_tag english_path, method: :get, class: 'form-search mb-2' do %>
+			<div>
+				<p  class='m-0 p-0 letter-date'>Start Date:</p>
+				<%= date_field_tag :start_date,
+					params[:start_date],
+					class: "form-control input-sm p-0",
+					placeholder: "Data Inicial",
+					value: @start_date.strftime("%Y-%m-%d")
+				%>
+			</div>
+			<div>
+				<p class='m-0 p-0  letter-date'>End Date:</p>
+				<%= date_field_tag :end_date,
+					params[:end_date],
+					class: "form-control input-sm p-0",
+					placeholder: "Data Final",
+					value: @end_date.strftime("%Y-%m-%d")
+				%>
+			</div>
+			<div class='search w-100' style="writing-mode: vertical-rl">
+				<%= submit_tag "FILTER", class: "orange-button-search p-2" %>
+			</div>
+		<% end %>
+		<div id="plotdata"
+			data-almirantadoint="<%= @almirantado_int_data.to_json %>"
+			data-almirantadoext="<%= @almirantado_ext_data.to_json %>"
+			data-tide="<%= @tides.to_json %>"
+			data-language='english'>
+			<div id="tide-plot" class='graph'>
+			</div>
+			<div class="observation-tide">
+				*radar / **float-operated.
+			</div>
+			<div class="observation-tide">
+				***The predicted tide was generated from data observed in 1989, when the
+        coastal, morphological and oceanographic characteristics of the region
+        were different from the current ones. The predicted tide will be updated
+        with the new data collected once the minimum observation period to
+        perform the forecast is obtained.
+			</div>
+			<%= form_tag download_path, method: :post, class: 'w-100 form-horizontal row justify-content-around align-items-center vertical-align-center' do %>
+				<%= text_field_tag :meas_tides, @csv_string, class: "inactive-tab"  %>
+				<%= text_field_tag :start_date, @start_date.strftime("%Y-%m-%d"), class: "inactive-tab"  %>
+				<%= text_field_tag :end_date, @end_date.strftime("%Y-%m-%d"), class: "inactive-tab"  %>
+				<%= submit_tag("DOWNLOAD DATA", title: 'Download Data', class: "orange-button-search p-2") %>
+			<% end %>
+			<div id="wspd-plot" class='graph'>
+			</div>
+			<div id="wdir-plot" class='graph'>
+			</div>
+			<div class="row">
+				<div class="col-sm-12 col-md-12">
+					<div id="wdir-plot-almirantadoint" class='graph'>
+					</div>
+				</div>
+			</div>
+			<div id="swvht-plot" class='graph'>
+			</div>
+			<div id="wvdir-plot" class='graph'>
+			</div>
+			<div class="row">
+				<div class="col-sm-12 col-md-12">
+					<div id="wvdir-plot-almirantadoint" class='graph'>
+					</div>
+				</div>				
+			</div>
+			<div id="mxwvht-plot" class='graph'>
+			</div>
+			<div id="tp-plot" class='graph'>
+			</div>
+			<div id="sst-plot" class='graph'>
+			</div>
+		</div>
+	</div>
+</div>
+
+<% if @popup %>
+	<div class="full-screen flex-container-center" data-pop="<%= @popup %>" id='first-full-screen'>
+<% else %>
+	<div class="inactive-tab full-screen flex-container-center" data-pop="<%= @popup %>" id='first-full-screen'>
+<% end %>
+	<p><i class="fas fa-times-circle"></i></p>
+	<div class='info-text mt-2 text-center'><strong>NORONHA.LIVE</strong></div>
+	<h4 class='mt-2 text-center'><strong>Real-time data for Fernando de Noronha:</strong></h4>
+	<h6 class='mt-2 text-center'><strong>- Tides</strong></h4>
+	<h6 class='mt-2 text-center'><strong>- Waves</strong></h4>
+	<h6 class='mt-2 text-center'><strong>- Wind</strong></h4>
+	<h6 class='mt-2 text-center'><strong>- Water Temperature</strong></h4>
+	<div class="row  justify-content-center ">
+		<h7 class='m-3 text-center'><strong>Contact: chm.pnboia@marinha.mil.br</strong></h4>
+	</div>
+</div>

@@ -79,7 +79,8 @@
 							data-markers="<%= [@almirantado_int, @almirantado_ext].to_json %>"
 							data-almirantadoint="<%= @almirantado_int_data.to_json %>"
 							data-almirantadoext="<%= @almirantado_ext_data.to_json %>"
-							data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>">
+							data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>"
+							data-language="portuguese">
 				</div>
 				<div class="row">
 					<div class="col-md-6 col-sm-12 text-right"> 
@@ -112,13 +113,13 @@
 										</div>
 										<div class="col-6 text-center"> 								
 											<% if @almirantado_int_data[:sst][0] %>
-												<p><strong>SST:</strong> <%= @almirantado_int_data[:sst][0].round()%> °C</p>
+												<p><strong>TEMP. ÁGUA:</strong> <%= @almirantado_int_data[:sst][0].round()%> °C</p>
 											<% elsif @almirantado_int_data[:sst][1] %>
-												<p><strong>SST:</strong> <%= @almirantado_int_data[:sst][1].round()%> °C</p>
+												<p><strong>TEMP. ÁGUA:</strong> <%= @almirantado_int_data[:sst][1].round()%> °C</p>
 											<% elsif @almirantado_int_data[:sst][2] %>
-												<p><strong>SST:</strong> <%= @almirantado_int_data[:sst][2].round()%> °C</p>
+												<p><strong>TEMP. ÁGUA:</strong> <%= @almirantado_int_data[:sst][2].round()%> °C</p>
 											<% else %>
-												<p><strong>SST:</strong> -- °C</p>
+												<p><strong>TEMP. ÁGUA:</strong> -- °C</p>
 											<% end %>
 											<% if @almirantado_int_data[:wspd][0] %>
 												<p><strong>VEL. VENTO:</strong> <%= @almirantado_int_data[:wspd][0].round()%> m/s</p>
@@ -216,7 +217,6 @@
 			data-almirantadoint="<%= @almirantado_int_data.to_json %>"
 			data-almirantadoext="<%= @almirantado_ext_data.to_json %>"
 			data-tide="<%= @tides.to_json %>"
-
 			data-language='portuguese'>
 			<div id="tide-plot" class='graph'>
 			</div>
@@ -229,6 +229,12 @@
 				eram diferentes das atuais. A maré prevista será atualizada com os novos dados
 				coletados assim que for obtido o período mínimo de observação para realizar a previsão.
 			</div>
+			<%= form_tag download_path, method: :post, class: 'pt-2 w-100 form-horizontal row justify-content-around align-items-center vertical-align-center' do %>
+				<%= text_field_tag :meas_tides, @csv_string, class: "inactive-tab"  %>
+				<%= text_field_tag :start_date, @start_date.strftime("%Y-%m-%d"), class: "inactive-tab"  %>
+				<%= text_field_tag :end_date, @end_date.strftime("%Y-%m-%d"), class: "inactive-tab"  %>
+				<%= submit_tag("BAIXAR DADOS", title: 'Baixar Dados', class: "orange-button-search p-2") %>
+			<% end %>
 			<div id="wspd-plot" class='graph'>
 			</div>
 			<div id="wdir-plot" class='graph'>

@@ -28,33 +28,48 @@ const initPlotly = () => {
 
 const plotTide = (almirantadoextData, tideData, language) => {
 
+  let tide_name
+  if (language === 'english') {
+    tide_name = "MEASURED TIDE RLS*"
+  }
+
   const almirantadoextTide1 = {
     x: almirantadoextData.date_time_elev1.filter(n => n),
     y: almirantadoextData.elev1.filter(n => n),
     mode: 'lines+markers',
-    name: 'MARÉ MEDIDA RLS*',
+    name: tide_name,
     line: {
       color: '#c22d45',
       width: 2
     }
   };
 
+  if (language === 'english') {
+    tide_name = "MEASURED TIDE SE200**"
+  }
+
+
   const almirantadoextTide2 = {
     x: almirantadoextData.date_time_elev2,
     y: almirantadoextData.elev2,
     mode: 'lines+markers',
-    name: 'MARÉ MEDIDA SE200**',
+    name: tide_name,
     line: {
       color: '#2f42ad',
       width: 2
     }
   };
 
+  if (language === 'english') {
+    tide_name = "PREDICTED TIDE***"
+  }
+
+
   const almirantadoextTide = {
     x: tideData.date_time,
     y: tideData.elev,
     mode: 'lines+markers',
-    name: 'MARÉ PREVISTA***',
+    name: tide_name,
     line: {
       color: '#486641',
       width: 2
@@ -68,7 +83,7 @@ const plotTide = (almirantadoextData, tideData, language) => {
   let title = 'Elevação do nível do mar (cm)'
   if (language === 'english') {
     text = "TIDES"
-    title = 'Sea Level (m)'
+    title = 'Sea Level (cm)'
   }
 
 
