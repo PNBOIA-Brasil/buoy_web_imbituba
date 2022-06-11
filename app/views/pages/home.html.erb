@@ -163,18 +163,13 @@
 												<p title="medição por radar"><strong>MARÉ MEDIDA RLS*:</strong> -- cm</p>
 												<p title="medição por boia e contra-peso"><strong>MARÉ MEDIDA SE200**:</strong> -- cm</p>
 											<% end %>
-											<div class='observation-tide'>*radar / **boia e contra-peso</div>
+											<div class='pt-1 observation-tide'>*radar / **boia e contra-peso</div>
 										</div>
 									</div>
 								<% end %>												
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="text-center mt-2">
-					<h5 class='animate-pisc'><a href="https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/21-fernando_de_noronha.pdf" target="_blank" style="decoration: none">
-						CLIQUE AQUI PARA ACESSAR A TÁBUA DE MARÉS PARA FERNANDO DE NORONHA
-					</a></h5>
 				</div>
 			</div>			
 		</div>
@@ -228,12 +223,21 @@
 				eram diferentes das atuais. A maré prevista será atualizada com os novos dados
 				coletados assim que for obtido o período mínimo de observação para realizar a previsão.
 			</div>
-			<%= form_tag download_path, method: :post, class: 'pt-2 w-100 form-horizontal row justify-content-around align-items-center vertical-align-center' do %>
-				<%= text_field_tag :meas_tides, @csv_string, class: "inactive-tab"  %>
-				<%= text_field_tag :start_date, @start_date.strftime("%Y-%m-%d"), class: "inactive-tab"  %>
-				<%= text_field_tag :end_date, @end_date.strftime("%Y-%m-%d"), class: "inactive-tab"  %>
-				<%= submit_tag("BAIXAR DADOS", title: 'Baixar Dados', class: "orange-button-search p-2") %>
-			<% end %>
+			<div class='row mt-2'>
+				<div class="col-md-6 col-sm-12 text-center"> 
+					<%= form_tag download_path, method: :post, class: 'animate-pisc p-1' do %>
+						<%= text_field_tag :meas_tides, @csv_string, class: "inactive-tab"  %>
+						<%= text_field_tag :start_date, @start_date.strftime("%Y-%m-%d"), class: "inactive-tab"  %>
+						<%= text_field_tag :end_date, @end_date.strftime("%Y-%m-%d"), class: "inactive-tab"  %>
+						<%= submit_tag("BAIXAR MARÉ MEDIDA", title: 'Baixar Dados', class: "h-100") %>
+					<% end %>
+				</div>
+				<div class="col-md-6 col-sm-12 text-center"> 
+					<form action="https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/21-fernando_de_noronha.pdf" target="_blank" class='animate-pisc p-1'>
+						<input type="submit" title='Baixar Tábua de Marés' class="h-100" value="BAIXAR TÁBUA DE MARÉS" />
+					</form>
+				</div>
+			</div>
 			<div id="wspd-plot" class='graph'>
 			</div>
 			<div id="wdir-plot" class='graph'>
