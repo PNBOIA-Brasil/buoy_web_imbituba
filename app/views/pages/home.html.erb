@@ -42,10 +42,10 @@
 				se uniram para elaborar um sistema completo 
 				de monitoramento das condições de ondas, ventos e marés no Arquipélago
 				de Fernando de Noronha. Para isso, montamos uma rede de coleta de dados
-				ambientais por meio do uso de boias ondógrafo de fundeio e estações
-				maregráficas. <strong>Aqui você poderá ter acesso aos dados 
+				ambientais por meio do uso de boias ondógrafo de fundeio (boia Spotter, da SOFAR) e estações
+				maregráficas (modelos RADAR e Boia e Contra-peso, da OTT). <strong>Aqui você poderá ter acesso aos dados 
 				coletados em tempo real por nossos sistemas.</strong> </h6>
-			</div>			
+			</div>
 		</div>
 		<div class="row align-items-center mt-2">
 			<div class="col-sm-12 col-md-6 col-lg-6 mt-2 align-items-center">	
@@ -85,8 +85,8 @@
 				<div class="row">
 					<div class="col-md-6 col-sm-12 text-right"> 
 						<div class="card-product mt-1 box" id='almirantado_int'>
-							<div class="card-product-infos w-100">		
-								<h3 class='text-center'>BOIA</h3>
+							<div class="card-product-infos w-100">
+								<h3 class='text-center'>BOIA SPOTTER</h3>
 								<% if @almirantado_int_data == {} || @almirantado_int_data[:date_time] == [] %>
 									<p  class='text-center'><strong>A SER INSTALADO</strong></p>
 								<% else %>
@@ -143,7 +143,7 @@
 					<div class="col-md-6 col-sm-12 text-right"> 
 						<div class="card-product mt-1 box" id='almirantado_ext'>
 							<div class="card-product-infos w-100">		
-								<h3 class='text-center'>MARÉGRAFO</h3>
+								<h3 class='text-center'>MARÉGRAFO OTT</h3>
 								<% if @almirantado_ext_data == {} || @almirantado_ext_data[:date_time] == [] %>
 									<p  class='text-center'><strong>A SER INSTALADO</strong></p>
 								<% else %>

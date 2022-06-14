@@ -38,13 +38,22 @@
 				</div>			
 			</div>
 			<div class="col-sm-12 col-md-6 col-lg-6 mt-2 align-items-center">
-        <h6>The <strong>GLOSS-BRASIL</strong> and <strong>REMObs</strong> projects
-        came together to create a complete system to
-        monitoring the conditions of waves, winds and tides in the
-        Fernando de Noronha Archipelago. To this end, we set up a network to
-        collect environmental data through the use of moored wave buoys and
-        tide gauge stations. <strong>Here you can access the data
-        collected in real time by our systems.</strong> </h6>
+				<h6>The <strong>GLOSS-BRASIL</strong> and <strong>REMObs</strong> projects
+				came together to create a complete system to
+				monitoring the conditions of waves, winds and tides in the
+				Fernando de Noronha Archipelago. To this end, we set up a network to
+				collect environmental data through the use of moored wave buoys (Spotter buoys, from SOFAR)
+				and tide gauge stations (RADAR and Float-operated systems, from OTT).
+				<strong>Here you can access the data collected in real time by our systems.</strong> </h6>
+
+				<h6>Os projetos <strong>GLOSS-BRASIL</strong> e <strong>REMObs</strong> 
+				se uniram para elaborar um sistema completo 
+				de monitoramento das condições de ondas, ventos e marés no Arquipélago
+				de Fernando de Noronha. Para isso, montamos uma rede de coleta de dados
+				ambientais por meio do uso de boias ondógrafo de fundeio (boia Spotter, da SOFAR) e estações
+				maregráficas (modelos RADAR e boia e contra-peso, da OTT). <strong>Aqui você poderá ter acesso aos dados 
+				coletados em tempo real por nossos sistemas.</strong> </h6>
+
 			</div>			
 		</div>
 		<div class="row align-items-center mt-2">
@@ -88,7 +97,7 @@
 					<div class="col-md-6 col-sm-12 text-right"> 
 						<div class="card-product mt-1 box" id='almirantado_int'>
 							<div class="card-product-infos w-100">		
-								<h3 class='text-center'>BUOY</h3>
+								<h3 class='text-center'>BUOY - SPOTTER</h3>
 								<% if @almirantado_int_data == {} || @almirantado_int_data[:date_time] == [] %>
 									<p  class='text-center'><strong>NOT WORKING STATION</strong></p>
 								<% else %>
@@ -145,7 +154,7 @@
 					<div class="col-md-6 col-sm-12 text-right"> 
 						<div class="card-product mt-1 box" id='almirantado_ext'>
 							<div class="card-product-infos w-100">		
-								<h3 class='text-center'>TIDE GAUGE</h3>
+								<h3 class='text-center'>TIDE GAUGE - OTT</h3>
 								<% if @almirantado_ext_data == {} || @almirantado_ext_data[:date_time] == [] %>
 									<p  class='text-center'><strong>NOT WORKING STATION</strong></p>
 								<% else %>
