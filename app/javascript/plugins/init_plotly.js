@@ -32,7 +32,7 @@ const plotTide = (almirantadoextData, tideData, language) => {
   if (language === 'english') {
     tide_name = "MEASURED TIDE RLS*"
   } else {
-    tide_name = "MARÉ MEDIDA RLS"
+    tide_name = "MARÉ MEDIDA RLS*"
   }
 
   const almirantadoextTide1 = {
@@ -49,7 +49,7 @@ const plotTide = (almirantadoextData, tideData, language) => {
   if (language === 'english') {
     tide_name = "MEASURED TIDE SE200**"
   } else {
-    tide_name = "MARÉ MEDIDA SE200"
+    tide_name = "MARÉ MEDIDA SE200**"
   }
 
 
