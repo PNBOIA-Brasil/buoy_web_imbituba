@@ -2,7 +2,7 @@ import Typed from 'typed.js';
 
 const initQuotes = () => {
   new Typed('#banner-typed-text', {
-    strings: ["NORONHA"],
+    strings: ["SANTA CATARINA"],
     typeSpeed: 200,
     loop: true
   });

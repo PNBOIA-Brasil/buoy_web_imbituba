@@ -1,6 +1,7 @@
 import mapboxgl from 'mapbox-gl';
 import spotterIconYellow from '../images/spotter_icon_yellow.png';
 import tideIcon from '../images/maregrafo.png';
+import weatherIcon from '../images/weather.png';
 
 
 const initMapbox = () => {
@@ -17,7 +18,7 @@ const initMapbox = () => {
 		mapboxgl.accessToken = mapElement.dataset.mapboxApiKey;
 		const map = new mapboxgl.Map({
 			container: 'map',
-			style: 'mapbox://styles/mapbox/outdoors-v11'
+			style: 'mapbox://styles/mapbox/satellite-v9'
 		});
 
 		const markers = JSON.parse(mapElement.dataset.markers);
@@ -28,15 +29,16 @@ const initMapbox = () => {
 		const almirantadoExtCard = document.getElementById('almirantado_ext');
 
 		const language = mapElement.dataset.language;
-
+		let counter = 0
 		markers.forEach((marker) => {
 			if (marker.name === 'almirantado_int') {
 				var almirantado_int = document.createElement('div');
 				almirantado_int.className = 'marker';
 				almirantado_int.style.backgroundImage = `url('${spotterIconYellow}')`;
 				almirantado_int.style.backgroundSize = 'contain';
-				almirantado_int.style.width = '50px';
-				almirantado_int.style.height = '37px';
+				almirantado_int.style.width = '45px';
+				almirantado_int.style.height = '34px';
+				almirantado_int.style.zIndex = '99999';
 				let markerAlmirantadoInt
 				if (JSON.stringify(almirantado_intData) === '{}' || almirantado_intData.date_time.length === 0) {
 					if (language === 'english'){
@@ -87,15 +89,15 @@ const initMapbox = () => {
 						almirantadoIntCard.classList.add('card-animation');
 			        });
 				}
-			} else if (marker.name === 'almirantado_ext'){
+			} else if (marker.name.startsWith('SB')) {
 				var almirantado_ext = document.createElement('div');
 				almirantado_ext.className = 'marker';
-				almirantado_ext.style.backgroundImage = `url('${tideIcon}')`;
+				almirantado_ext.style.backgroundImage = `url('${weatherIcon}')`;
 				almirantado_ext.style.backgroundSize = 'contain';
-				almirantado_ext.style.width = '27px';
-				almirantado_ext.style.height = '40px';
+				almirantado_ext.style.width = '30px';
+				almirantado_ext.style.height = '30px';
 				let markerAlmirantadoExt
-				if (JSON.stringify(almirantado_extData) === '{}'  || almirantado_extData.date_time.length === 0) {
+				if (JSON.stringify(almirantado_extData[counter]) === '{}'  || almirantado_extData[counter].date_time.length === 0) {
 					if (language === 'english'){
 						markerAlmirantadoExt = new mapboxgl.Marker(almirantado_ext)
 						.setLngLat([ marker.lon, marker.lat ])
@@ -106,14 +108,9 @@ const initMapbox = () => {
 						markerAlmirantadoExt = new mapboxgl.Marker(almirantado_ext)
 						.setLngLat([ marker.lon, marker.lat ])
 								.setPopup(new mapboxgl.Popup().setHTML(`<div class='pop-up'>
-									<h3 class='m-0 p-0'><strong>A SER INSTALADO</strong></h3></div>`))
+									<h3 class='m-0 p-0'><strong>SEM DADOS DISPONÍVEIS</strong></h3></div>`))
 						.addTo(map);
 					}
-					markerAlmirantadoExt.getElement().addEventListener('click', () => {
-					almirantadoExtCard.classList.remove('card-animation');
-					void 	almirantadoExtCard.offsetWidth; // trigger reflow
-					almirantadoExtCard.classList.add('card-animation');
-						});					
 				} else {
 					if (language === 'english'){
 						markerAlmirantadoExt = new mapboxgl.Marker(almirantado_ext)
@@ -121,32 +118,47 @@ const initMapbox = () => {
 								.setPopup(new mapboxgl.Popup().setHTML(`<div class='pop-up'>
 									<h3 class='m-0 p-0'><strong>OPERATIVE</strong></h3>
 									<p class='m-0 p-0'><strong>LAT:</strong> ${Math.round(marker.lat*100)/100}, <strong>LON:</strong> ${Math.round(marker.lon*100)/100}</p>
-									<p class='m-0 p-0'><strong>DATE:</strong> ${almirantado_extData.date_time[0].slice(0,10)}</p>
-									<p class='m-0 p-0'><strong>TIME:</strong> ${almirantado_extData.date_time[0].slice(11,16)}</p>
-									<p class='m-0 p-0'><strong>Measured Tide RLS*:</strong> ${almirantado_extData.elev1[0]} cm</p>
-									<p class='m-0 p-0'><strong>Measured Tide SE200**:</strong> ${almirantado_extData.elev2[0]} cm</p></div>`))
+									<p class='m-0 p-0'><strong>DATE:</strong> ${almirantado_extData[counter].date_time[0].slice(0,10)}</p>
+									<p class='m-0 p-0'><strong>TIME:</strong> ${almirantado_extData[counter].date_time[0].slice(11,16)}</p>
+									<p class='m-0 p-0'><strong>Velocidade:</strong> ${almirantado_extData[counter].elev1[0]} cm</p>
+									<p class='m-0 p-0'><strong>Measured Tide SE200**:</strong> ${almirantado_extData[counter].elev2[0]} cm</p></div>`))
 						.addTo(map);
 					} else {
 						markerAlmirantadoExt = new mapboxgl.Marker(almirantado_ext)
 						.setLngLat([ marker.lon, marker.lat ])
 								.setPopup(new mapboxgl.Popup().setHTML(`<div class='pop-up'>
-									<h3 class='m-0 p-0'><strong>OPERATIVA</strong></h3>
+									<p class='m-0 p-0'><strong>ESTAÇÃO METEOROLÓGICA</strong></p>
+									<p class='m-0 p-0'><strong>METAR: ${marker.name}</strong></p>
 									<p class='m-0 p-0'><strong>LAT:</strong> ${Math.round(marker.lat*100)/100}, <strong>LON:</strong> ${Math.round(marker.lon*100)/100}</p>
-									<p class='m-0 p-0'><strong>DATA:</strong> ${almirantado_extData.date_time[0].slice(0,10)}</p>
-									<p class='m-0 p-0'><strong>HORA:</strong> ${almirantado_extData.date_time[0].slice(11,16)}</p>
-									<p class='m-0 p-0'><strong>Maré Medida RLS*:</strong> ${almirantado_extData.elev1[0]} cm</p>
-									<p class='m-0 p-0'><strong>Maré Medida SE200**:</strong> ${almirantado_extData.elev2[0]} cm</p></div>`))
+									<p class='m-0 p-0'><strong>DATA:</strong> ${almirantado_extData[counter].date_time[0].slice(0,10)}</p>
+									<p class='m-0 p-0'><strong>HORA:</strong> ${almirantado_extData[counter].date_time[0].slice(11,16)}</p>
+									<p class='m-0 p-0'><strong>Temp. Ar:</strong> ${almirantado_extData[counter].atmp[0]} °C</p>
+									<p class='m-0 p-0'><strong>Vel. Vento:</strong> ${almirantado_extData[counter].wspd[0]} m/s</p>
+									<p class='m-0 p-0'><strong>Dir. Vento:</strong> ${almirantado_extData[counter].wdir[0]} °</p></div>`))
 						.addTo(map);
 					}
-					markerAlmirantadoExt.getElement().addEventListener('click', () => {
-						almirantadoExtCard.classList.remove('card-animation');
-						void 	almirantadoExtCard.offsetWidth; // trigger reflow
-						almirantadoExtCard.classList.add('card-animation');
-			        });
-			    }
-			} 
+				}
+				counter = counter + 1
+			} else {
+				var almirantado_ext = document.createElement('div');
+				almirantado_ext.className = 'marker';
+				almirantado_ext.style.backgroundImage = `url('${tideIcon}')`;
+				almirantado_ext.style.backgroundSize = 'contain';
+				almirantado_ext.style.width = '21px';
+				almirantado_ext.style.height = '31px';
+				let markerAlmirantadoExt
+				markerAlmirantadoExt = new mapboxgl.Marker(almirantado_ext)
+				.setLngLat([ marker.lon, marker.lat ])
+					.setPopup(new mapboxgl.Popup().setHTML(`<div class='pop-up'>
+						<p class='m-0 p-0'><strong>ESTAÇÃO MAREGRÁFICA</strong></p>
+						<p class='m-0 p-0'><strong>CHM: ${marker.name}</strong></p>
+						<p class='m-0 p-0'><strong>LAT:</strong> ${Math.round(marker.lat*100)/100}, <strong>LON:</strong> ${Math.round(marker.lon*100)/100}</p>
+						<a class="btn m-0 p-0 collor-yellow" href="https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/${marker.buoy_id}" target="_blank">
+							<i class="fas fa-chart-pie"></i>
+						</a></div>`))
+				.addTo(map);
+			}
 		});
-
 		fitMapToMarkers(map, markers);
 
 	}

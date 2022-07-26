@@ -29,43 +29,22 @@
   </div>
 </div>
 <div class="projetos">
-	<div class= "container text-justify" id="projetos">
-		<h2>PROJETOS GLOSS-BRASIL e REMObs </h2>
-		<div class="row align-items-center">
-			<div class="col-sm-12 col-md-6 col-lg-6 mt-2 align-items-center">	
+	<div class= "container align-items-center pt-4 pb-3" id="projetos">
+		<h2>PROJETO REMO Observacional </h2>
+		<div class="row justify-content-center align-items-center">
+			<div class="col-sm-12 col-md-12 col-lg-12 mt-2 text-justify align-items-center">
+				<h6>O projeto <strong>REMObs (REMO Observacional)</strong> é uma parceria entre o <strong>Centro de Hidrografia da Marinha (CHM) e a 
+					PETROBRAS</strong>e contempla uma união de esforços para o desenvolvimento e consolidação de uma Boia Meteoceanográfica Nacional
+					(BMO-BR). E para isso, também prevê o estabelecimento de uma rede de coleta de dados operacionais no Atlântico Sul, fator
+					de grande importância para a calibração e validação de modelos de previsão meteoceanográfica. A boia Imbituba faz parte dessa rede de coleta
+					de dados.
+				</h6>
+			</div>
+			<div class="col-sm-12 col-md-12 col-lg-12 mt-2 align-items-center">	
 				<div class= "card-project text-align-center ">
-					<%= image_tag "boia_noronha.jpg"%>
+					<%= image_tag "boia_imbituba.png"%>
 				</div>			
 			</div>
-			<div class="col-sm-12 col-md-6 col-lg-6 mt-2 align-items-center">
-				<h6>Os projetos <strong>GLOSS-BRASIL</strong> e <strong>REMObs</strong> 
-				se uniram para elaborar um sistema completo 
-				de monitoramento das condições de ondas, ventos e marés no Arquipélago
-				de Fernando de Noronha. Para isso, montamos uma rede de coleta de dados
-				ambientais por meio do uso de boias ondógrafo de fundeio (boia Spotter, da SOFAR) e estações
-				maregráficas (modelos RADAR e Boia e Contra-peso, da OTT). <strong>Aqui você poderá ter acesso aos dados 
-				coletados em tempo real por nossos sistemas.</strong> </h6>
-			</div>
-		</div>
-		<div class="row align-items-center mt-2">
-			<div class="col-sm-12 col-md-6 col-lg-6 mt-2 align-items-center">	
-				<h6>Gerenciado pelo <strong>Centro de Hidrografia da Marinha (CHM)</strong>, o
-				<strong>GLOSS-BRASIL</strong> tem um papel importante na determinação das
-				variações no nível do mar para auxiliar as ciências ambientais e para
-				melhorar o planejamento social e econômico.</h6>	
-				<h6>O projeto <strong>REMObs (REMO Observacional)</strong>, uma parceria entre o <strong>Centro de Hidrografia da Marinha
-				(CHM)</strong> e a <strong>PETROBRAS</strong>, contempla uma união de esforços para o desenvolvimento e consolidação de uma Boia Meteoceanográfica Nacional
-				(BMO-BR). E para isso, também prevê o estabelecimento de uma rede de coleta de dados operacionais no Atlântico Sul, fator
-				de grande importância para a calibração e validação de modelos de previsão meteoceanográfica.</h6>
-				<h6><strong>Este projeto conta com o apoio dos nossos parceiros do
-					<a href="https://www.icmbio.gov.br/portal/" target="_blank" style="decoration: none">ICMBio</a> e do 
-					<a href="https://surfguru.com.br/" target="_blank" style="decoration: none">SURFGURU</a></strong>.</h6>.
-			</div>
-			<div class="col-sm-12 col-md-6 col-lg-6 mt-2 align-items-center">
-				<div class= "card-project text-align-center">
-					<%= image_tag "maregrafo_noronha.png"%>
-				</div>	
-			</div>			
 		</div>
 	</div>
 </div>
@@ -75,18 +54,18 @@
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12 text-right"> 
 				<div id="map"
-							style="width: 100%; height: 400px;"
-							data-markers="<%= [@almirantado_int, @almirantado_ext].to_json %>"
-							data-almirantadoint="<%= @almirantado_int_data.to_json %>"
-							data-almirantadoext="<%= @almirantado_ext_data.to_json %>"
-							data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>"
-							data-language="portuguese">
+					style="width: 100%; height: 400px;"
+					data-markers="<%= @systems.to_json %>"
+					data-almirantadoint="<%= @almirantado_int_data.to_json %>"
+					data-almirantadoext="<%= @systems_data.to_json %>"
+					data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>"
+					data-language="portuguese">
 				</div>
-				<div class="row">
-					<div class="col-md-6 col-sm-12 text-right"> 
+				<div class="row justify-content-center">
+					<div class="col-md-12 col-sm-12 text-right"> 
 						<div class="card-product mt-1 box" id='almirantado_int'>
 							<div class="card-product-infos w-100">
-								<h3 class='text-center'>BOIA SPOTTER</h3>
+								<h3 class='text-center'>BOIA ONDÓGRAFO SPOTTER</h3>
 								<% if @almirantado_int_data == {} || @almirantado_int_data[:date_time] == [] %>
 									<p  class='text-center'><strong>A SER INSTALADO</strong></p>
 								<% else %>
@@ -140,36 +119,6 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-md-6 col-sm-12 text-right"> 
-						<div class="card-product mt-1 box" id='almirantado_ext'>
-							<div class="card-product-infos w-100">		
-								<h3 class='text-center'>MARÉGRAFO OTT</h3>
-								<% if @almirantado_ext_data == {} || @almirantado_ext_data[:date_time] == [] %>
-									<p  class='text-center'><strong>A SER INSTALADO</strong></p>
-								<% else %>
-									<p  class='text-center'><strong>ÚLTIMO DADO:</strong> <%= @almirantado_ext_data[:date_time][0].strftime('%d/%m/%Y %H:%M')%></p>
-									<div class="row">
-										<div class="col-12 text-center">
-											<% if @almirantado_ext_data[:elev1][0] %>
-												<p title="medição por radar"><strong>MARÉ MEDIDA RLS*:</strong> <%= @almirantado_ext_data[:elev1][0].round(0)%> cm</p>
-												<p title="medição por boia e contra-peso"><strong>MARÉ MEDIDA SE200**:</strong> <%= @almirantado_ext_data[:elev2][0].round(0)%> cm</p>
-											<% elsif @almirantado_ext_data[:elev1][1] %>
-												<p title="medição por radar"><strong>MARÉ MEDIDA RLS*:</strong> <%= @almirantado_ext_data[:elev1][1].round(0)%> cm</p>
-												<p title="medição por boia e contra-peso"><strong>MARÉ MEDIDA SE200**:</strong> <%= @almirantado_ext_data[:elev2][1].round(0)%> cm</p>
-											<% elsif @almirantado_ext_data[:elev1][2] %>
-												<p title="medição por radar"><strong>MARÉ MEDIDA RLS*:</strong> <%= @almirantado_ext_data[:elev1][2].round(0)%> cm</p>
-												<p title="medição por boia e contra-peso"><strong>MARÉ MEDIDA SE200**:</strong> <%= @almirantado_ext_data[:elev2][0].round(0)%> cm</p>
-											<% else %>
-												<p title="medição por radar"><strong>MARÉ MEDIDA RLS*:</strong> -- cm</p>
-												<p title="medição por boia e contra-peso"><strong>MARÉ MEDIDA SE200**:</strong> -- cm</p>
-											<% end %>
-											<div class='pt-1 observation-tide'>*radar / **boia e contra-peso</div>
-										</div>
-									</div>
-								<% end %>												
-							</div>
-						</div>
-					</div>
 				</div>
 			</div>			
 		</div>
@@ -212,32 +161,6 @@
 			data-almirantadoext="<%= @almirantado_ext_data.to_json %>"
 			data-tide="<%= @tides.to_json %>"
 			data-language='portuguese'>
-			<div id="tide-plot" class='graph'>
-			</div>
-			<div class="observation-tide">
-				*radar / **boia e contra-peso.
-			</div>
-			<div class="observation-tide">
-				***A maré prevista foi gerada a partir de dados observados
-				em 1989, quando as características costeiras, morfológicas e oceanográficas da região
-				eram diferentes das atuais. A maré prevista será atualizada com os novos dados
-				coletados assim que for obtido o período mínimo de observação para realizar a previsão.
-			</div>
-			<div class='row mt-2'>
-				<div class="col-md-6 col-sm-12 text-center"> 
-					<%= form_tag download_path, method: :post, class: 'animate-pisc p-1' do %>
-						<%= text_field_tag :meas_tides, @csv_string, class: "inactive-tab"  %>
-						<%= text_field_tag :start_date, @start_date.strftime("%Y-%m-%d"), class: "inactive-tab"  %>
-						<%= text_field_tag :end_date, @end_date.strftime("%Y-%m-%d"), class: "inactive-tab"  %>
-						<%= submit_tag("BAIXAR MARÉ MEDIDA", title: 'Baixar Dados', class: "h-100") %>
-					<% end %>
-				</div>
-				<div class="col-md-6 col-sm-12 text-center"> 
-					<form action="https://www.marinha.mil.br/chm/sites/www.marinha.mil.br.chm/files/dados_de_mare/21-fernando_de_noronha.pdf" target="_blank" class='animate-pisc p-1'>
-						<input type="submit" title='Baixar Tábua de Marés' class="h-100" value="BAIXAR TÁBUA DE MARÉS" />
-					</form>
-				</div>
-			</div>
 			<div id="wspd-plot" class='graph'>
 			</div>
 			<div id="wdir-plot" class='graph'>
@@ -274,8 +197,8 @@
 	<div class="inactive-tab full-screen flex-container-center" data-pop="<%= @popup %>" id='first-full-screen'>
 <% end %>
 	<p><i class="fas fa-times-circle"></i></p>
-	<div class='info-text mt-2 text-center'><strong>NORONHA.LIVE</strong></div>
-	<h4 class='mt-2 text-center'><strong>Dados em tempo real para Fernando de Noronha:</strong></h4>
+	<div class='info-text mt-2 text-center'><strong>SANTACATARINA.LIVE</strong></div>
+	<h4 class='mt-2 text-center'><strong>Dados em tempo real para Santa Catarina:</strong></h4>
 	<h6 class='mt-2 text-center'><strong>- Marés</strong></h4>
 	<h6 class='mt-2 text-center'><strong>- Ondas</strong></h4>
 	<h6 class='mt-2 text-center'><strong>- Ventos</strong></h4>

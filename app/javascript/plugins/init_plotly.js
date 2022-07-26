@@ -13,7 +13,6 @@ const initPlotly = () => {
 
     const language = chartElement.dataset.language;
 
-    plotTide(almirantadoextData, tideData, language)
     plotWspd(almirantadointData, language);
     plotWdir(almirantadointData, language);
     plotWdirg(almirantadointData, language);
@@ -22,7 +21,6 @@ const initPlotly = () => {
     plotWvdir(almirantadointData, language);
     plotTp(almirantadointData, language);
     plotSst(almirantadointData, language);
-
   }
 };
 
